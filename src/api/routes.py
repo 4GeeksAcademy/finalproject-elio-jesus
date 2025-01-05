@@ -54,3 +54,28 @@ def register():
 
     except Exception as err:
         return jsonify(err),500
+    
+@api.route('/login', methods=['POST'])
+def login():
+    try:
+        body = request.json
+        username = body.get('username')
+        password = body.get('password')
+
+        if username is None or password is None:
+            return jsonify('Todos los campos son requeridos'),400
+        else:
+            user = User().query.filter_by(username=username).first()
+
+            if user is None:
+                return jsonify('No encontrado el usuario'),400
+            else:
+                if check_password_hash(user.password,f'{password}{user.salt}'):
+                    token=create_access_token(identity=str(user.id))
+                    return jsonify({"token":token,"current_user":user.serialize()}),200
+                else:
+                    return jsonify("Credenciales invalidas"),400
+                
+    except Exception as err:
+        return jsonify(err),500
+    
