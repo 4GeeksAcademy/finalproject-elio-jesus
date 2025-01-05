@@ -104,9 +104,9 @@ export const Register = () => {
                     />
                 </div>
 
-                <button type="button" onClick={() => newContact(contact)} className="btn btn-info w-100">Registar</button>
+                <button type="button" onClick={() => newContact(contact)} className="btn btn-info w-100">Registrar</button>
                 {save && <div className="alert alert-success mt-3" role="alert">
-                    El usuario se agrego con exito
+                    El usuario se agregó con éxito
                 </div>}
             </form>
             <Link to="/">
