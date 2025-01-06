@@ -1,26 +1,15 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            message: null,
-            contacts: [], 
-            currentUser: null 
+            token:localStorage.getItem("token") || null, 
+            currentUser: localStorage.getItem("currentUser") || null 
         },
         actions: {
-            getMessage: async () => {
-                try {
-                    const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-                    const data = await resp.json();
-                    setStore({ message: data.message });
-                    return data;
-                } catch (error) {
-                    console.log("Error loading message from backend", error);
-                }
-            },
 
             //  guardar contacto
             saveContact: async (contact) => {
                 try {
-                    const response = await fetch("/api/register", {
+                    const response = await fetch(process.env.BACKEND_URL+"/register", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -28,24 +17,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                         body: JSON.stringify(contact)
                     });
 
-                    const result = await response.json();
-                    if (response.ok) {
-                        setStore({ contacts: [...getStore().contacts, result.user] });
-                        return true;
-                    } else {
-                        console.error(result.message);
-                        return false;
-                    }
+                    if (response.ok) 
+                        return (response.status)
                 } catch (error) {
-                    console.error("Error registrando el usuario", error);
-                    return false;
+                    return (error)
                 }
             },
 
             //  login
             login: async (credentials) => {
                 try {
-                    const response = await fetch("/api/login", {
+                    const response = await fetch(process.env.BACKEND_URL+"/login", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json"
@@ -54,17 +36,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     const result = await response.json();
-                    if (response.ok) {
-                        setStore({ currentUser: result.user });
-                        return true;
-                    } else {
-                        console.error(result.message);
-                        return false;
-                    }
+                    if (response.ok) 
+                        setStore({ 
+                            token:result.token,
+                            currentUser: result.user 
+                        })
+                        localStorage.setItem("token",result.token)
+                        localStorage.setItem("currentUser",result.currentUser)
+                        return (response.status)
+                    
                 } catch (error) {
-                    console.error("Error al iniciar sesión", error);
-                    return false;
+                    return (error)
                 }
+            },
+            
+            //cerrar sesion
+            close: () => {
+                setStore({
+                    token:null,
+                    currentUser:null
+                })
+                localStorage.removeItem("token")
+                localStorage.removeItem("currentUser")
             }
         }
     };

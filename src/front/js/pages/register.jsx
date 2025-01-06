@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const initialContact = {
     firstName: "",
@@ -15,6 +15,7 @@ export const Register = () => {
     const [contact, setContact] = useState(initialContact);
     const [save, setSave] = useState(false);
     const [error, setError] = useState('');
+    const navigate = useNavigate()
 
     const handleChange = (evt) => {
         setContact({
@@ -23,26 +24,29 @@ export const Register = () => {
         });
     }
 
-    const newContact = async (contact) => {
+    const newContact = async (event) => {
+        event.preventDefault()
         if (!contact.firstName || !contact.lastName || !contact.username || !contact.email || !contact.password) {
             setError('Todos los campos son obligatorios');
             return;
         }
 
         const result = await actions.saveContact(contact);
-        if (result) {
+        if (result==201) {
             setSave(true);
+            navigate("/login")
             setTimeout(() => {
                 setSave(false);
             }, 2000);
+        }else if (result==400){
+            alert("Error de credenciales")
         }
     }
 
     return (
-        <div className="container pt-4">
+        <div className="container d-flex flex-column pt-4">
             <h1 className="fs-1 text-center">Nuevo Usuario</h1>
-            {error && <div className="alert alert-danger" role="alert">{error}</div>}
-            <form className="form p-2 my-3 border border-1">
+            <form className="form w-50 align-self-center p-2 my-3" onSubmit={newContact}>
                 <div className="mb-3">
                     <label htmlFor="inputFirstName" className="form-label">Nombre</label>
                     <input
@@ -104,14 +108,19 @@ export const Register = () => {
                     />
                 </div>
 
-                <button type="button" onClick={() => newContact(contact)} className="btn btn-info w-100">Registrar</button>
+                <button type="submit" className="btn btn-info w-100">Registrar</button>
                 {save && <div className="alert alert-success mt-3" role="alert">
                     El usuario se agregó con éxito
                 </div>}
             </form>
-            <Link to="/">
-                <button className="btn btn-dark">Regresar</button>
-            </Link>
+
+            {error && <div className="alert alert-danger w-50 align-self-center" role="alert">{error}</div>}
+
+            <div className="w-50 d-flex flex-column align-self-center">
+                <Link to="/">
+                    <button className="btn btn-dark">Regresar</button>
+                </Link>
+            </div>
         </div>
     );
 };

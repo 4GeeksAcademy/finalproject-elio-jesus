@@ -72,7 +72,7 @@ def login():
             else:
                 if check_password_hash(user.password,f'{password}{user.salt}'):
                     token=create_access_token(identity=str(user.id))
-                    return jsonify({"token":token,"current_user":user.serialize()}),200
+                    return jsonify({"token":token,"currentUser":user.serialize()}),200
                 else:
                     return jsonify("Credenciales invalidas"),400
                 
