@@ -92,55 +92,73 @@ export const Home = () => {
 
             {/* Calculator */}
 			<div className="container">
-                <section className="tmb-calculator">
-                    <h5 className="card-title text-center pt-4">Calculadora de carga de kalorías</h5>
-                    <div className="form-group">
-                        <label>Peso (kg):</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            value={weight}
-                            onChange={(e) => setWeight(e.target.value)}
-                        />
+                <div className="row pt-4 pb-2">
+                    <div className="col-md-6">
+                    <h5 className="card-title text-center pt-4">ingresa tus datos aquí</h5>
                     </div>
-                    <div className="form-group">
-                        <label>Altura (cm):</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            value={height}
-                            onChange={(e) => setHeight(e.target.value)}
-                        />
+                    <div className="col-md-6">
+                    <h5 className="card-title text-center pt-4">Calculadora de carga de calorías</h5>
                     </div>
-                    <div className="form-group">
-                        <label>Edad:</label>
-                        <input
-                            type="number"
-                            className="form-control"
-                            value={age}
-                            onChange={(e) => setAge(e.target.value)}
-                        />
+                </div>
+
+                <div className="row">
+                    <div className="col-md-6 d-flex justify-content-center">
+                        <section className="tmb-calculator ">
+                            <div className="form-group ">
+                                <label className="pb-1">Peso (kg):</label>
+                                <input
+                                    type="number"
+                                    className="form-control imput"
+                                    value={weight}
+                                    onChange={(e) => setWeight(e.target.value)}
+                                />
+                            </div>
+                            <div className="form-group pt-2">
+                                <label className="pb-1">Altura (cm):</label>
+                                <input
+                                    type="number"
+                                    className="form-control imput"
+                                    value={height}
+                                    onChange={(e) => setHeight(e.target.value)}
+                                />
+                            </div>
+                            <div className="form-group pt-2">
+                                <label className="pb-1">Edad:</label>
+                                <input
+                                    type="number"
+                                    className="form-control imput"
+                                    value={age}
+                                    onChange={(e) => setAge(e.target.value)}
+                                />
+                            </div>
+                            <div className="form-group pt-2">
+                                <label className="pb-1">Género:</label>
+                                <select
+                                    className="form-control imput"
+                                    value={gender}
+                                    onChange={(e) => setGender(e.target.value)}
+                                >
+                                    <option value="male">Hombre</option>
+                                    <option value="female">Mujer</option>
+                                </select>
+                            </div>
+                            <div className="d-flex justify-content-center pt-4 pb-4">
+                                <button className="btn btn-dark" onClick={calculateTMB}>Calcular</button>
+                            </div>
+                            {tmb > 0 && (
+                                <div className="result pt-4">
+                                    <h6 className="text-center">Tu carga de calorías es: {tmb.toFixed(2)} kcal</h6>
+                                </div>
+                            )}
+                        </section>
                     </div>
-                    <div className="form-group">
-                        <label>Género:</label>
-                        <select
-                            className="form-control"
-                            value={gender}
-                            onChange={(e) => setGender(e.target.value)}
-                        >
-                            <option value="male">Hombre</option>
-                            <option value="female">Mujer</option>
-                        </select>
+                    <div className="col-md-6 text-center d-flex align-items-center">
+                        <p> Con esta calculadora de calorías y macros podrás determinar 
+                            exactamente cuánto debes comer ya sea para ganar músculo, para perder grasa 
+                            o mantenerte en tu peso
+                        </p>
                     </div>
-                    <div className="d-flex justify-content-center pt-4">
-                        <button className="btn btn-dark" onClick={calculateTMB}>Calcular</button>
-                    </div>
-                    {tmb > 0 && (
-                        <div className="result pt-4">
-                            <h6 className="text-center">Tu carga de calorías es: {tmb.toFixed(2)} kcal</h6>
-                        </div>
-                    )}
-                </section>
+                </div>
             </div>
         </div>
     );

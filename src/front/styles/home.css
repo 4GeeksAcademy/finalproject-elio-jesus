@@ -35,3 +35,8 @@ body {
     height: 150px;
     width: 150px;
 }
+
+.imput {
+    border-radius: 20px;
+    width: 300px;;
+}
