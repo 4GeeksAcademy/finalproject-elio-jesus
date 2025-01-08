@@ -105,7 +105,7 @@ export const Home = () => {
                     <div className="col-md-6 d-flex justify-content-center">
                         <section className="tmb-calculator ">
                             <div className="form-group ">
-                                <label className="pb-1">Peso (kg):</label>
+                                <label className="pb-1 ms-3">Peso (kg):</label>
                                 <input
                                     type="number"
                                     className="form-control imput"
@@ -114,7 +114,7 @@ export const Home = () => {
                                 />
                             </div>
                             <div className="form-group pt-2">
-                                <label className="pb-1">Altura (cm):</label>
+                                <label className="pb-1 ms-3">Altura (cm):</label>
                                 <input
                                     type="number"
                                     className="form-control imput"
@@ -123,7 +123,7 @@ export const Home = () => {
                                 />
                             </div>
                             <div className="form-group pt-2">
-                                <label className="pb-1">Edad:</label>
+                                <label className="pb-1 ms-3">Edad:</label>
                                 <input
                                     type="number"
                                     className="form-control imput"
@@ -132,7 +132,7 @@ export const Home = () => {
                                 />
                             </div>
                             <div className="form-group pt-2">
-                                <label className="pb-1">Género:</label>
+                                <label className="pb-1 ms-3">Género:</label>
                                 <select
                                     className="form-control imput"
                                     value={gender}
@@ -147,7 +147,8 @@ export const Home = () => {
                             </div>
                             {tmb > 0 && (
                                 <div className="result pt-4">
-                                    <h6 className="text-center">Tu carga de calorías es: {tmb.toFixed(2)} kcal</h6>
+                                    <h6 className="text-center btn"
+                                    >Tu carga de calorías es: {tmb.toFixed(2)} kcal</h6>
                                 </div>
                             )}
                         </section>
