@@ -33,11 +33,11 @@ export const Home = () => {
 			<section className=" mb-3 pt-4 cards" >
 				<div className="row">
 					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs rounded-start" alt="..." />
+						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs " alt="..." />
 					</div>
 					<div className="col-md-6 d-flex align-items-center">
 						<div className="pt-4">
-							<h5 className="card-title text-center pt-4">Ejercicios</h5>
+							<h5 className="card-title text-center pt-4 ps-4">Ejercicios</h5>
 							<p className="card-text text-center">En nuestra página encontraras una serie de ejercicios y rutinas
 								según sea tu necesidad
 							</p>
@@ -54,7 +54,7 @@ export const Home = () => {
 					<div className="col-md-6 d-flex align-items-center">
 						<div className="">
 							<h5 className="card-title text-center pt-4">Profesionales</h5>
-							<p className="card-text text-center"> En nuestra página tendrás la mejor asesoria de Profesionales
+							<p className="card-text text-center ps-4"> En nuestra página tendrás la mejor asesoria de Profesionales
 								con experiencia en sus áreas, tales como: Nutricionistas, Fisioterapeutas y entrenadores. Podrás
 								agendar citas con ellos y obtener resultados.
 							</p>
@@ -64,7 +64,7 @@ export const Home = () => {
 						</div>
 					</div>
 					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs rounded-start" alt="..." />
+						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs " alt="..." />
 					</div>
 				</div>
 			</section>
@@ -74,12 +74,12 @@ export const Home = () => {
 			<section className=" mb-3 pt-4 cards" >
 				<div className="row">
 					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs rounded-start" alt="..." />
+						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs " alt="..." />
 					</div>
 					<div className="col-md-6 d-flex align-items-center">
 						<div className="">
 							<h5 className="card-title text-center pt-4">Ejercicios</h5>
-							<p className="card-text text-center">En nuestra página encontraras una serie de ejercicios y rutinas
+							<p className="card-text text-center ps-4">En nuestra página encontraras una serie de ejercicios y rutinas
 								según sea tu necesidad
 							</p>
 							<div className="d-flex justify-content-center">
