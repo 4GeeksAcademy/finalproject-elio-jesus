@@ -1,8 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
-            token:localStorage.getItem("token") || null, 
-            currentUser: localStorage.getItem("currentUser") || null 
+            token:JSON.parse(localStorage.getItem("token")) || null, 
+            currentUser:JSON.parse(localStorage.getItem("currentUser")) || null 
         },
         actions: {
 
@@ -39,10 +39,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.ok) 
                         setStore({ 
                             token:result.token,
-                            currentUser: result.user 
+                            currentUser:result.currentUser 
                         })
-                        localStorage.setItem("token",result.token)
-                        localStorage.setItem("currentUser",result.currentUser)
+                        localStorage.setItem("token",JSON.stringify(result.token))
+                        localStorage.setItem("currentUser",JSON.stringify(result.currentUser))
                         return (response.status)
                     
                 } catch (error) {
@@ -58,7 +58,27 @@ const getState = ({ getStore, getActions, setStore }) => {
                 })
                 localStorage.removeItem("token")
                 localStorage.removeItem("currentUser")
-            }
+            },
+
+            // editar usuario
+            updateContact: async (contact) => { 
+                try{
+                    const response = await fetch(process.env.BACKEND_URL+"/updateContact",{
+                        method:"PUT",
+                        headers:{
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify(contact)
+                    })
+                    if (response.ok){
+                        return (true)
+                    }
+                }catch(error){
+                    return (error)
+                }
+            },
+
+
         }
     };
 };

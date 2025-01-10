@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
+import "../../styles/login.css"
 
 const Login = () => {
     const { store, actions } = useContext(Context);
@@ -35,7 +36,7 @@ const Login = () => {
     }
 
     return (
-        <div className="container d-flex flex-column pt-4">
+        <div className="container d-flex flex-column traslate">
             <h1 className="fs-1 text-center">Iniciar Sesión</h1>
             <form className="form w-50 align-self-center p-2 my-3" onSubmit={handleLogin}>
                 <div className="mb-3">
@@ -63,18 +64,19 @@ const Login = () => {
                     />
                 </div>
 
-                <button type="submit" className="btn btn-info w-100">Iniciar Sesión</button>
+                <button type="submit" className="btn boton1 w-100">Iniciar Sesión</button>
                 {loggedIn && <div className="alert alert-success mt-3" role="alert">
                     Sesión iniciada con éxito
                 </div>}
             </form>
 
-            {error && <div className="alert alert-danger w-50 align-self-center" role="alert">{error}</div>}
+            {error && <div className="alert alert-danger w-50 align-self-center lign-bottom" role="alert">{error}</div>}
 
-            <div className="w-50 d-flex flex-column align-self-center">
+            <div className="w-50 d-flex justify-content-between align-self-center">
                 <Link to="/">
                     <button className="btn btn-dark">Regresar</button>
                 </Link>
+                <p >No tienes cuenta? <Link className="text-decoration-underline" to="/register">Registrate</Link></p>
             </div>
         </div>
     );

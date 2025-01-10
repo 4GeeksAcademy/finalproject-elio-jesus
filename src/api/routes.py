@@ -78,4 +78,26 @@ def login():
                 
     except Exception as err:
         return jsonify(err),500
+
+@api.route('/updateContact', methods=["PUT"])
+def updateContact():
+    try:
+        body = request.json
+        firstName = body.get('firstName')
+        lastName = body.get('lastName')
+        email = body.get('email')
+        username = body.get('username')
+
+        if firstName is None or lastName is None or email is None or username is None:
+            return jsonify('No pueden quedar campos vacios'), 400
+        else:
+            user = User.query.filter_by(id=id).first()
+            user.firstName = firstName
+            user.lastName = lastName
+            user.email = email
+            user.username = username
+            db.session.commit()
+           
+    except Exception as error:
+        return (error),500
     

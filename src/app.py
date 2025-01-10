@@ -2,6 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
+from datetime import timedelta
 from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
@@ -43,6 +44,7 @@ app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object //PREGUNTA POR QUE ESTO HACE FUNCIONAR LA CREACION DE TOKEN
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY") 
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 jwt = JWTManager(app)
 
 @app.errorhandler(APIException)
