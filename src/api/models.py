@@ -7,6 +7,7 @@ class Rol(Enum):
     entrenador="trainer"
     nutricionista="nutritionist"
     fisioterapeuta="physiotherapist"
+    admin="admin"
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +19,7 @@ class User(db.Model):
     password = db.Column(db.String(255), unique=False, nullable=False)
     salt = db.Column(db.String(180))
     rol = db.Column(db.Enum(Rol))
+    avatar = db.Column(db.String(180))
     is_active = db.Column(db.Boolean(), nullable=False, default=False)
     create_at = db.Column(db.DateTime(timezone=True), default=db.func.now(), nullable=False)
     update_at = db.Column(db.DateTime(timezone=True), default=db.func.now(),onupdate=db.func.now(), nullable=False)
@@ -30,6 +32,9 @@ class User(db.Model):
             "id": self.id,
             "email": self.email,
             "firstName":self.firstName,
-            "username":self.username
+            "lastName":self.lastName,
+            "username":self.username,
+            "birthDate":self.birthDate
             # do not serialize the password, its a security breach
         }
+    
