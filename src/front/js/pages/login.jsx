@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
+
 import "../../styles/login.css"
 
 const Login = () => {
@@ -78,7 +79,9 @@ const Login = () => {
                 </Link>
                 <p >No tienes cuenta? <Link className="text-decoration-underline" to="/register">Registrate</Link></p>
             </div>
+            
         </div>
+        
     );
 }
 

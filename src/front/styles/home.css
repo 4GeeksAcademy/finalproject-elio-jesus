@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+  
 }
 
 .hero {
@@ -45,3 +46,12 @@ body {
     background-color: rgb(63, 166, 37);
     border: 0;
 }
+
+.footer { 
+    position: fixed ; 
+    bottom: 0 ; 
+     
+}
+
+
+
