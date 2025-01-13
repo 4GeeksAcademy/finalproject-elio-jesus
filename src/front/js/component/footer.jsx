@@ -3,7 +3,7 @@ import "../../styles/home.css"
 import { useLocation } from "react-router-dom";
 
 export const Footer = () => {
-	const location= useLocation()
+	const location = useLocation()
 	
 	return (
 	<footer className= {`text-center vw-100 ${location.pathname !== "/" && "footer"} bg-dark`}>
