@@ -4,12 +4,12 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home.jsx";
-import { Demo } from "./pages/demo";
+import { Demo, Exercises } from "./pages/exercises.jsx";
 import { Register } from "./pages/register.jsx";
 import Login from "./pages/login.jsx"
 import Profile from "./pages/profile.jsx";
 import EditProfile from "./pages/editProfile.jsx";
-import Excercises from "./pages/excercises.jsx"
+
 
 import injectContext from "./store/appContext";
 
@@ -31,12 +31,12 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
+                        <Route element={<Exercises />} path="/exercises" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EditProfile />} path="/edit_profile" />
-                        <Route element={<Excercises />} path="/excercises" /> 
+                        
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

@@ -1,0 +1,65 @@
+/* src/App.css */
+.ejercicios-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.ejercicios-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.ejercicio-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+    width: calc(50% - 10px);
+}
+
+.ejercicio-card:hover {
+    transform: translateY(-10px);
+}
+
+.ejercicio-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.ejercicio-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.ejercicio-info h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.ejercicio-info p {
+    color: #777;
+    margin-bottom: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    background: #333;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn {
+    background-color: rgb(63, 166, 37);
+    border: 0;
+}
+
+.btn:hover {
+    background: #555;
+}
+
