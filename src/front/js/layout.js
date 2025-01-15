@@ -9,6 +9,7 @@ import { Register } from "./pages/register.jsx";
 import Login from "./pages/login.jsx"
 import Profile from "./pages/profile.jsx";
 import EditProfile from "./pages/editProfile.jsx";
+import {ChestExercises} from "./pages/chestExercises.jsx"
 
 
 import injectContext from "./store/appContext";
@@ -32,10 +33,12 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Exercises />} path="/exercises" />
+                        <Route element={<ChestExercises />} path="/chest_exercises" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EditProfile />} path="/edit_profile" />
+                        
                         
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>

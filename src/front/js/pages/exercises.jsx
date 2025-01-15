@@ -57,6 +57,7 @@ export const Exercises = () => {
                             <h2>{ejercicio.nombre}</h2>
                             <p>{ejercicio.descripcion}</p>
                             <button className="btn btn-dark">dime más</button>
+                            {/* <Link to={`/ejercicio/${ejercicio.id}`} className="btn btn-dark">dime más</Link> */}
                         </div>
                     </div>
                 ))}
