@@ -3,7 +3,7 @@ import "../../styles/chestExercises.css"
 
 export const ChestExercises = () => {
     return (
-        <div className="container">
+        <div className="container prueba">
             <h1 className="text-center mt-3">Pectorales</h1>
             <div className="row border mt-3" >
                 

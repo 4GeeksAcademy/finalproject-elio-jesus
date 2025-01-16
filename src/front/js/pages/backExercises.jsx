@@ -1,6 +1,7 @@
 import React from "react";
 import "../../styles/chestExercises.css"; 
 
+
 export const BackExercises = () => {
     const espalda = [
         {
@@ -62,10 +63,11 @@ export const BackExercises = () => {
     ];
 
     return (
-        <div className="container">
-            <div className="row border mt-3" >
+        <div className="container prueba " >
+           <h1 className="text-center mt-3">Espalda</h1>
                 {espalda.map((espalda) => (
-                    <React.Fragment key={espalda.id}>
+                    
+                    <div className="row border mt-3" >
                         <div className="col-6">
                             <h4 className="fw-bold mt-4 pb-3">{espalda.nombre}</h4>
                             <p className="mt-5">{espalda.descripcion}</p>
@@ -79,9 +81,10 @@ export const BackExercises = () => {
                                 title={espalda.nombre}
                             />
                         </div>
-                    </React.Fragment>
+                    </div>
+
                 ))}
             </div>
-        </div>
+        
     );
 };
