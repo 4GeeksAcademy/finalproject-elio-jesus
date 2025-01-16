@@ -9,7 +9,7 @@ export const Exercises = () => {
     const ejercicios = [
         {
             id: 1,
-            nombre: 'Pecho',
+            nombre: 'Pectorales',
             descripcion: 'ejercicios para trabajar el pecho.',
             imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
         },
