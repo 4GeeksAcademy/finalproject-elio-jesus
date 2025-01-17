@@ -12,7 +12,8 @@ import EditProfile from "./pages/editProfile.jsx";
 import {ChestExercises} from "./pages/chestExercises.jsx";
 import { BackExercises } from "./pages/backExercises.jsx";
 import { ArmsExercises } from "./pages/armsExercises.jsx";
-import { LegsExercises } from "./pages/legsExercises.jsx";
+import { AbdomenExercises } from "./pages/abdomenExercises.jsx";
+import { LegsExercises } from "./pages/legsExercises.jsx"
 
 import injectContext from "./store/appContext";
 
@@ -38,7 +39,9 @@ const Layout = () => {
                         <Route element={<ArmsExercises />} path="/arms_exercises" />
                         <Route element={<ChestExercises />} path="/chest_exercises" />
                         <Route element={<BackExercises />} path="/back_exercises" />
+                        <Route element={<AbdomenExercises />} path="/abdomen_exercises" />
                         <Route element={<LegsExercises />} path="/legs_exercises" />
+                       
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Profile />} path="/profile" />
