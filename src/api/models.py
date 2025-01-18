@@ -24,17 +24,73 @@ class User(db.Model):
     create_at = db.Column(db.DateTime(timezone=True), default=db.func.now(), nullable=False)
     update_at = db.Column(db.DateTime(timezone=True), default=db.func.now(),onupdate=db.func.now(), nullable=False)
 
+    measures = db.relationship('Measures',uselist=False, back_populates='user')
+    social = db.relationship('Social', uselist=False, back_populates='user')
+
     def __repr__(self):
         return f'<User {self.email}>'
 
     def serialize(self):
+        measures_data = {}
+        social_data={}
+
+        if self.measures:
+            try:
+                measures_data = self.measures.serialize()
+            except (AttributeError, TypeError):  
+                print("Error serializing measures:", self.measures)
+                
+
+        if self.social:
+            try:
+                social_data = self.social.serialize() 
+            except (AttributeError, TypeError):
+                print("Error serializing measures:", self.social_data)
+
         return {
             "id": self.id,
             "email": self.email,
             "firstName":self.firstName,
             "lastName":self.lastName,
             "username":self.username,
-            "birthDate":self.birthDate
+            "birthDate":self.birthDate,
+            "measures":measures_data,
+            "social":social_data
             # do not serialize the password, its a security breach
         }
     
+class Measures(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    weight=db.Column(db.Float)
+    height=db.Column(db.Integer)
+    biceps=db.Column(db.Float)
+    waist=db.Column(db.Float)
+
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', back_populates='measures')
+    
+    def serialize(self):
+        return{
+            "weight":self.weight,
+            "height":self.height,
+            "biceps":self.biceps,
+            "waist":self.waist
+        }
+    
+    
+class Social(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    instagram = db.Column(db.String(30))
+    facebook = db.Column(db.String(30))
+    twitter = db.Column(db.String(30))
+
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', back_populates='social')
+
+    def serialize(self):
+        return{
+            "instagram":self.instagram,
+            "facebook":self.facebook,
+            "twitter":self.twitter
+        }
+

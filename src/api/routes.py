@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User,Measures,Social
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 import os
@@ -53,7 +53,7 @@ def register():
                 return jsonify('Intente mas tarde'),500
 
     except Exception as err:
-        return jsonify(err),500
+        return jsonify({'error': str(err)}),500
     
 @api.route('/login', methods=['POST'])
 def login():
@@ -66,38 +66,110 @@ def login():
             return jsonify('Todos los campos son requeridos'),400
         else:
             user = User().query.filter_by(username=username).first()
-
+            
             if user is None:
-                return jsonify('No encontrado el usuario'),400
+                return jsonify('No encontrado el usuario'),404
             else:
                 if check_password_hash(user.password,f'{password}{user.salt}'):
                     token=create_access_token(identity=str(user.id))
                     return jsonify({"token":token,"currentUser":user.serialize()}),200
                 else:
-                    return jsonify("Credenciales invalidas"),400
+                    return jsonify("Credenciales invalidas"),401
                 
     except Exception as err:
-        return jsonify(err),500
+        return jsonify({'error': str(err)}),500
 
 @api.route('/updateContact', methods=["PUT"])
+@jwt_required()
 def updateContact():
     try:
         body = request.json
         firstName = body.get('firstName')
         lastName = body.get('lastName')
-        email = body.get('email')
         username = body.get('username')
+        birthDate = body.get('birthDate')
+        user_id = get_jwt_identity()
 
-        if firstName is None or lastName is None or email is None or username is None:
+        if firstName is None or lastName is None or username is None:
             return jsonify('No pueden quedar campos vacios'), 400
         else:
-            user = User.query.filter_by(id=id).first()
+            user = User.query.filter_by(id=user_id).first()
             user.firstName = firstName
             user.lastName = lastName
-            user.email = email
             user.username = username
+            user.birthDate = birthDate
             db.session.commit()
-           
+            return jsonify({"currentUser":user.serialize()}),200
+            
     except Exception as error:
-        return (error),500
+        return jsonify({'error': str(error)}),500
+    
+@api.route('/saveMeasures', methods=['POST'])
+@jwt_required()
+def saveMeasures():
+    try:
+        body = request.json
+        weight = body.get('weight')
+        height = body.get('height')
+        biceps = body.get('biceps')
+        waist = body.get('waist')
+        user_id = get_jwt_identity()
+
+        if weight is None or height is None or biceps is None or waist is None:
+            return jsonify('No se pueden guardar campos vacios'), 400
+        else:
+            measure = Measures()
+            measure.weight = weight
+            measure.height = height
+            measure.biceps = biceps
+            measure.waist = waist
+            measure.user_id = user_id
+            db.session.add(measure)
+            try:
+                db.session.commit()
+                return jsonify("Guardado"),201     
+            except Exception as err:
+                return jsonify({'error': str(err)}),500
+    
+    except Exception as err:
+        return jsonify({'error': str(err)}),500
+    
+@api.route('/getUser', methods=['GET'])
+@jwt_required()
+def getUser():
+    try:
+        user_id = get_jwt_identity()
+        user = User.query.filter_by(id=user_id).first()
+        return jsonify({"currentUser":user.serialize()}),200
+
+    except Exception as error:
+        return jsonify({'error': str(error)})
+    
+@api.route('/saveSocial', methods=['POST'])
+@jwt_required()
+def saveSocial():
+    try:
+        body = request.json
+        instagram = body.get('ig')
+        facebook = body.get('face')
+        twitter = body.get('twitter')
+        user_id = get_jwt_identity()
+
+        if instagram is None and facebook is None and twitter is None:
+            return jsonify("No pueden estar todos los campos vacios")
+        else:
+            social = Social()
+            social.instagram=instagram
+            social.facebook=facebook
+            social.twitter=twitter
+            social.user_id=user_id
+
+            db.session.add(social)
+            try:
+                db.session.commit()
+                return jsonify('Guardado exitosamente'),200
+            except Exception as error:
+                return jsonify({'error': str(error)}),500
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
     

@@ -1,19 +1,12 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { Context } from "../store/appContext";
 import { Link,useNavigate } from "react-router-dom";
 
 
 const EditProfile = () => {
     const { store, actions } = useContext(Context)
-    const initial = {
-        id:store.currentUser['id'],
-        firstName: store.currentUser['firstName'],
-        lastName: store.currentUser['lastName'],
-        username: store.currentUser['username'],
-        email:store.currentUser['email']
-    }
-    const [contact, setContact] = useState(initial)
-    const [edited, setEdited] = useState(false)
+    const [contact, setContact] = useState(store.currentUser)
+    const [edited, setEdited] = useState()
     const navigate = useNavigate()
 
     const handleChange = (evt) => {
@@ -23,28 +16,29 @@ const EditProfile = () => {
         });
     }
 
-    const edit = async (contact,evt) => {
-        evt.preventDefault()
+    const edit = async (event,contact) => {
+        event.preventDefault()
         const editado = await actions.updateContact(contact)
         if (editado == 200) {
             setEdited(true)
-            setTimeout(() => { setEdited(false) }, 1000)
-            navigate("/login")
+            navigate("/profile")
         }
     }
+
+    // useEffect(()=>{setContact(store.currentUser)},[])
 
     return (
         store.token &&
         <div className="container d-flex flex-column pt-5">
             <h1 className="fs-1 text-center">Editar Usuario</h1>
-            <form className="form w-50 align-self-center p-2 my-3" onSubmit={edit}>
+            <form className="form w-50 align-self-center p-2 my-3" onSubmit={(event)=>edit(event,contact)}>
                 <div className="mb-3">
                     <label htmlFor="inputFirstName" className="form-label">Nombre</label>
                     <input
                         type="text"
                         className="form-control"
                         name="firstName"
-                        value={contact.firstName}
+                        value={contact?.firstName}
                         id="inputFirstName"
                         onChange={handleChange}
                         required
@@ -56,7 +50,7 @@ const EditProfile = () => {
                         type="text"
                         className="form-control"
                         name="lastName"
-                        value={contact.lastName}
+                        value={contact?.lastName}
                         id="inputLastName"
                         onChange={handleChange}
                         required
@@ -68,38 +62,36 @@ const EditProfile = () => {
                         type="text"
                         className="form-control"
                         name="username"
-                        value={contact.username}
+                        value={contact?.username}
                         id="inputUsername"
                         onChange={handleChange}
                         required
                     />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="inputEmail" className="form-label">E-mail</label>
-                    <input
-                        type="email"
-                        className="form-control"
-                        name="email"
-                        value={contact.email}
-                        id="inputEmail"
-                        onChange={handleChange}
-                        required
-                    />
-                </div>
-                {/* <div className="mb-3">
-                           <label htmlFor="inputPassword" className="form-label">Contraseña</label>
+                           <label htmlFor="inputBirthDate" className="form-label">Fecha de nacimiento</label>
                            <input
-                               type="password"
+                               type="date"
                                className="form-control"
-                               name="password"
-                               value={contact.password}
-                               id="inputPassword"
+                               name="birthDate"
+                               value={contact?.birthDate || ""}
+                               id="inputBirthDate"
                                onChange={handleChange}
-                               required
                            />
-                       </div> */}
+                </div>
+                <div className="mb-3">
+                           <label htmlFor="inputAvatar" className="form-label">Foto de perfil</label>
+                           <input
+                               type="file"
+                               className="form-control"
+                               name="avatar"
+                               value={contact?.avatar || ""}
+                               id="inputAvatar"
+                               onChange={handleChange}
+                           />
+                </div>
 
-                <button type="submit" className="btn boton w-100">Registrar</button>
+                <button type="submit" className="btn boton w-100">Editar</button>
                 {edited && <div className="alert alert-success mt-3" role="alert">
                     El usuario se edito con éxito
                 </div>}
@@ -107,7 +99,7 @@ const EditProfile = () => {
 
 
             <div className="w-50 d-flex flex-column align-self-center">
-                <Link to="/">
+                <Link to="/profile">
                     <button className="btn btn-dark">Regresar</button>
                 </Link>
             </div>
