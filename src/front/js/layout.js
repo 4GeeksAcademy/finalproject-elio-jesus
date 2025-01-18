@@ -15,6 +15,7 @@ import { ArmsExercises } from "./pages/armsExercises.jsx";
 import { AbdomenExercises } from "./pages/abdomenExercises.jsx";
 import { LegsExercises } from "./pages/legsExercises.jsx";
 import { ShouldersExercises } from "./pages/shouldersExercises.jsx";
+import { Admin } from "./pages/admin.jsx";
 
 import injectContext from "./store/appContext";
 
@@ -47,6 +48,7 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EditProfile />} path="/edit_profile" />
+                        <Route element={<Admin />} path="/admin" />
                         
                         
                         <Route element={<h1>Not found!</h1>} />
