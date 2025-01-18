@@ -4,16 +4,17 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home.jsx";
-import { Demo, Exercises } from "./pages/exercises.jsx";
+import { Exercises } from "./pages/exercises.jsx";
 import { Register } from "./pages/register.jsx";
-import Login from "./pages/login.jsx"
+import Login from "./pages/login.jsx";
 import Profile from "./pages/profile.jsx";
 import EditProfile from "./pages/editProfile.jsx";
 import {ChestExercises} from "./pages/chestExercises.jsx";
 import { BackExercises } from "./pages/backExercises.jsx";
 import { ArmsExercises } from "./pages/armsExercises.jsx";
 import { AbdomenExercises } from "./pages/abdomenExercises.jsx";
-import { LegsExercises } from "./pages/legsExercises.jsx"
+import { LegsExercises } from "./pages/legsExercises.jsx";
+import { ShouldersExercises } from "./pages/shouldersExercises.jsx";
 
 import injectContext from "./store/appContext";
 
@@ -41,7 +42,7 @@ const Layout = () => {
                         <Route element={<BackExercises />} path="/back_exercises" />
                         <Route element={<AbdomenExercises />} path="/abdomen_exercises" />
                         <Route element={<LegsExercises />} path="/legs_exercises" />
-                       
+                        <Route element={<ShouldersExercises />} path="/shoulders_exercises" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<Profile />} path="/profile" />

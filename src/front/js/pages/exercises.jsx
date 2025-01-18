@@ -6,39 +6,39 @@ import { Context } from "../store/appContext";
 
 
 export const Exercises = () => {
-    const ejercicios = [
+    const exercises = [
         {
-            id: 1,
+            id: 'chest_exercises',
             nombre: 'Pectorales',
-            descripcion: 'ejercicios para trabajar el pecho.',
+            descripcion: 'ejercicios para fortalecer el pecho.',
             imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
         },
         {
-            id: 2,
+            id: 'back_exercises',
             nombre: 'Espalda',
-            descripcion: 'Ejercicios para trabajar la espalda.',
+            descripcion: 'Ejercicios para fortalecer la espalda.',
             imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
         },
 		{
-			id: 3,
+			id: 'arms_exercises',
 			nombre: 'Brazos',
-			descripcion:'Ejercicios de biceps y triceps',
+			descripcion:'Ejercicios para fortalecer biceps y triceps',
 			imagen:'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
 		},
 		{
-			id: 4,
+			id: 'legs_exercises',
 			nombre: 'Piernas',
-			descripcion: 'Ejercicios para piernas y pantorrillas',
+			descripcion: 'Ejercicios para fortalecer piernas y pantorrillas',
 			imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
 		},
 		{
-			id: 5,
+			id: 'abdomen_exercises',
 			nombre: 'Abdomen',
 			descripcion: 'Ejercicios para fortalecer el abdomen',
 			imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
 		},
 		{
-			id: 6,
+			id: 'shoulders_exercises',
 			nombre: 'Hombros',
 			descripcion: 'Ejercicios para fortalecer hombros',
 			imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
@@ -47,17 +47,18 @@ export const Exercises = () => {
     ];
 
     return (
-        <div className="ejercicios-container">
+        <div className="ejercicios-container ">
             <h1>Ejercicios</h1>
             <div className="ejercicios-list">
-                {ejercicios.map(ejercicio => (
-                    <div className="ejercicio-card" key={ejercicio.id}>
-                        <img src={ejercicio.imagen} alt={ejercicio.nombre} className="ejercicio-img" />
+                {exercises.map(exercises => (
+                    <div className="ejercicio-card" key={exercises.id}>
+                        <img src={exercises.imagen} alt={exercises.nombre} className="ejercicio-img" />
                         <div className="ejercicio-info">
-                            <h2>{ejercicio.nombre}</h2>
-                            <p>{ejercicio.descripcion}</p>
-                            <button className="btn btn-dark">dime más</button>
-                            {/* <Link to={`/ejercicio/${ejercicio.id}`} className="btn btn-dark">dime más</Link> */}
+                            <h2>{exercises.nombre}</h2>
+                            <p>{exercises.descripcion}</p>
+                            {/* <button className="btn btn-dark">dime más</button> */}
+                            <Link to={`/${exercises.id}`} className="btn btn-dark">dime más</Link>
+                            
                         </div>
                     </div>
                 ))}

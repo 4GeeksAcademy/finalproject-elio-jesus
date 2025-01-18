@@ -3,6 +3,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    padding-bottom: 100px;
 }
 
 .ejercicios-list {
@@ -62,4 +63,6 @@
 .btn:hover {
     background: #555;
 }
+
+
 
