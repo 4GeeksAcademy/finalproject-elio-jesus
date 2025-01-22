@@ -4,13 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import "../../styles/profile.css"
 
 
-
-
 const Profile = () => {
     const { store, actions } = useContext(Context)
     const [measures, setMeasures] = useState(null)
-    const [social,setSocial] = useState(null)
+    const [social, setSocial] = useState(null)
     const [error, setError] = useState('')
+    // const [sendStatus,setSendStatus] = useState()
+    const [request, setRequest] = useState(null)
     const [save, setSave] = useState(false)
     const navigate = useNavigate()
     let hour = new Date()
@@ -50,11 +50,32 @@ const Profile = () => {
         }
     }
 
+    const handleChangeServices = (evt) => {
+        setRequest({
+            ...request,
+            [evt.target.name]: evt.target.value
+        })
+    }
+
+    const handleSubmitServices = async (evt) => {
+        evt.preventDefault()
+        if (!request.telephone || !request.linkedin) {
+            setError('Ambos campos son obligatorios')
+        }
+
+        const response = await actions.saveRequest(request)
+        if (response == 200) {
+            setSave(true)
+        } else if (response == 400) {
+            setError('Todos los campos son necesarios')
+        }
+    }
+
+
     useEffect(() => { !store.token ? navigate("/login") : null }, [store.token])
 
     return (
-
-        store.token && //pregunta esto
+        store.token &&
         <div className="container-fluid p-0">
             <div className="container-fluid fondo">
                 <div className="container">
@@ -106,21 +127,40 @@ const Profile = () => {
                                     <p className="fs-5 fw-bolder data-text">Medida de brazo</p>
                                     <p className="fs-6">{!store?.currentUser.measures.biceps ? "No cargado" : store?.currentUser.measures.biceps}</p>
                                 </div>
-                                <div>
-                                    <button type="button" className="btn text" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                                        Cargar Medidas
-                                    </button>
+                                <div >
+                                    {!store.currentUser.measures ?
+                                        <button type="button" className="btn text mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            Cargar Medidas
+                                        </button> : <button type="button" className="btn text" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                            Editar Medidas
+                                        </button>}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12 col-md-4 mt-3 d-flex justify-content-cente">
+                    <div className="col-12 col-md-4 mt-3">
                         <div className="border border-3 rounded-3 p-5 ">
-                            <h5 className="fw-bold">Quieres ofrecer tus servicios?</h5>
-                            <p>Necesitamos verificar tu currículum y experiencia en tu área</p>
-                            <button className="btn w-100 text">Cargar Info</button>
+                            {!store?.currentUser.request.status && (
+                                <>
+                                    <h5 className="fw-bold">Quieres ofrecer tus servicios?</h5>
+                                    <p>Necesitamos verificar tu currículum y experiencia en tu área</p>
+                                    <button type="button" className="btn w-100 text" data-bs-toggle="modal" data-bs-target="#modal2">
+                                        Cargar Info
+                                    </button>
+                                </>
+                            )}
+                            {store?.currentUser.request.status === "waiting" && (
+                                <>
+                                    <h5 className="fw-bold">Estamos trabajando por ti</h5>
+                                    <p>Verificaremos tu informacion</p>
+                                    <div className="alert alert-warning" role="alert">
+                                        En espera
+                                    </div>
+                                </>
+                            )}
+
                         </div>
                     </div>
                     <div className="col-12 col-md-4 mt-3">
@@ -213,7 +253,16 @@ const Profile = () => {
                                         required
                                     />
                                 </div>
-                                <button type="submit" className="btn btn-primary">Guardar</button>
+                                {
+                                    !store?.currentUser.measures ?
+                                        <button type="submit" onClick={()=>handleSubmit()} className="btn btn-primary">
+                                            Guardar
+                                        </button> :
+                                        <button type="submit" className="btn btn-secondary">
+                                            Editar
+                                        </button>
+                                }
+
                             </form>
 
                         </div>
@@ -276,7 +325,6 @@ const Profile = () => {
                                 </div>
                                 <button type="submit" className="btn btn-primary">Guardar</button>
                             </form>
-
                         </div>
                         {save && <div className="alert alert-success mt-3" role="alert">
                             Guardado con éxito
@@ -287,12 +335,72 @@ const Profile = () => {
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                     </div>
-                    
-                    
+
                 </div>
             </div>
+            <div className="modal fade" id="modal2" tabIndex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="modal2">Envia los requerimientos</h5>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                            <form className="form w-50 align-self-center ms-3 my-3" onSubmit={handleSubmitServices} >
+                                <div className="mb-3">
+                                    <label htmlFor="inputURL" className="form-label">URL de tu Linkedin</label>
+                                    <input
+                                        type="url"
+                                        className="form-control"
+                                        name="linkedin"
+                                        value={request?.url}
+                                        id="inputURL"
+                                        onChange={handleChangeServices}
+                                        required
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="inputTel" className="form-label">Numero de contacto</label>
+                                    <input
+                                        type="tel"
+                                        className="form-control"
+                                        name="telephone"
+                                        value={request?.phoneNumber}
+                                        id="inputTel"
+                                        onChange={handleChangeServices}
+                                        required
+                                    />
+                                </div>
+                                <select
+                                    className="form-select"
+                                    aria-label="Default select example"
+                                    name="profession"
+                                    value={request?.profession}
+                                    onChange={handleChangeServices}
+                                >
+                                    <option defaultValue>Marque su profesion</option>
+                                    <option value="Entrenador">Entrenador</option>
+                                    <option value="Fisioterapeuta">Fisioterapeuta</option>
+                                    <option value="Nutricionista">Nutricionista</option>
+                                </select>
+                                <button type="submit" className="btn btn-primary mt-2">Enviar</button>
+
+                            </form>
+                        </div>
+                        {save && <div className="alert alert-success mt-3" role="alert">
+                            Enviado con éxito
+                        </div>}
+                        {error && <div className="alert alert-danger w-50 align-self-center lign-bottom" role="alert">{error}
+                        </div>}
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        
+
 
 
 

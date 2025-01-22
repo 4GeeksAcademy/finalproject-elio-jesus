@@ -3,11 +3,17 @@ from enum import Enum
 db = SQLAlchemy()
 
 class Rol(Enum):
-    usuario="user"
+    general="general"
     entrenador="trainer"
     nutricionista="nutritionist"
     fisioterapeuta="physiotherapist"
     admin="admin"
+
+class Status(Enum):
+    waiting="waiting"
+    refused="refused"
+    approved="approved"
+    none="none"
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -18,7 +24,7 @@ class User(db.Model):
     username = db.Column(db.String(20), unique=True,nullable=False)
     password = db.Column(db.String(255), unique=False, nullable=False)
     salt = db.Column(db.String(180))
-    rol = db.Column(db.Enum(Rol))
+    rol = db.Column(db.Enum(Rol), default="general")
     avatar = db.Column(db.String(180))
     is_active = db.Column(db.Boolean(), nullable=False, default=False)
     create_at = db.Column(db.DateTime(timezone=True), default=db.func.now(), nullable=False)
@@ -26,6 +32,7 @@ class User(db.Model):
 
     measures = db.relationship('Measures',uselist=False, back_populates='user')
     social = db.relationship('Social', uselist=False, back_populates='user')
+    request = db.relationship('Request', uselist=False, back_populates='user')
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -33,6 +40,7 @@ class User(db.Model):
     def serialize(self):
         measures_data = {}
         social_data={}
+        status_data={}
 
         if self.measures:
             try:
@@ -47,6 +55,12 @@ class User(db.Model):
             except (AttributeError, TypeError):
                 print("Error serializing measures:", self.social_data)
 
+        if self.request:
+            try:
+                status_data = self.request.serialize() 
+            except (AttributeError, TypeError):
+                print("Error serializing measures:", self.status_data)
+
         return {
             "id": self.id,
             "email": self.email,
@@ -55,7 +69,9 @@ class User(db.Model):
             "username":self.username,
             "birthDate":self.birthDate,
             "measures":measures_data,
-            "social":social_data
+            "social":social_data,
+            "request":status_data
+
             # do not serialize the password, its a security breach
         }
     
@@ -93,4 +109,30 @@ class Social(db.Model):
             "facebook":self.facebook,
             "twitter":self.twitter
         }
+    
+class Request(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    telephone =db.Column(db.String(16))
+    linkedin = db.Column(db.String(100))
+    profession = db.Column(db.String(20))
+    status = db.Column(db.Enum(Status))
+
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', back_populates='request')
+
+    def serialize(self):
+        return{
+            "id":self.id,
+            "telephone":self.telephone,
+            "linkedin":self.linkedin,
+            "profession":self.profession,
+            "status":self.status.value
+        }
+    
+    def serialize_status(self):
+        return{
+            "status":self.status.value
+        }
+
+
 
