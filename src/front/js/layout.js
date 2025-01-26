@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home.jsx";
-import { Exercises } from "./pages/exercises.jsx";
+import  Exercises  from "./pages/exercises.jsx";
 import { Register } from "./pages/register.jsx";
 import Login from "./pages/login.jsx";
 import Profile from "./pages/profile.jsx";
@@ -48,9 +48,8 @@ const Layout = () => {
                         <Route element={<Login />} path="/login" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EditProfile />} path="/edit_profile" />
+                        
                         <Route element={<Admin />} path="/admin" />
-                        
-                        
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

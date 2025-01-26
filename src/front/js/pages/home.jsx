@@ -33,7 +33,7 @@ export const Home = () => {
 			<section className=" mb-3 pt-4 cards" >
 				<div className="row">
 					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs " alt="..." />
+						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
 					</div>
 					<div className="col-md-6 d-flex align-items-center">
 						<div className="pt-4">
@@ -64,7 +64,7 @@ export const Home = () => {
 						</div>
 					</div>
 					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs " alt="..." />
+						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
 					</div>
 				</div>
 			</section>
@@ -74,7 +74,7 @@ export const Home = () => {
 			<section className=" mb-3 pt-4 cards" >
 				<div className="row">
 					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" class="img-fluid imgs " alt="..." />
+						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
 					</div>
 					<div className="col-md-6 d-flex align-items-center">
 						<div className="">

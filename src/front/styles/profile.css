@@ -24,6 +24,14 @@
 }
 
 h3{
-    color:rgb(63, 166, 37)
+    color:rgb(63, 166, 37);
 }
 
+button{
+    background-color: rgb(63, 166, 37);
+}
+
+.icono{
+    font-size: 30px;
+    color:rgb(63, 166, 37);
+}

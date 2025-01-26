@@ -31,8 +31,10 @@ const Login = () => {
             setTimeout(() => {
                 setLoggedIn(false);
             }, 2000);
-        } else if (result == 400) {
+        } else if (result == 404) {
             setError('Credenciales incorrectas. Inténtalo de nuevo.')
+        }else{
+            setError('Error en el servidor, comuniquese con el administrador')
         }
     }
 

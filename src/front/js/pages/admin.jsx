@@ -8,12 +8,13 @@ export const Admin = () => {
     const [newExercise, setNewExercise] = useState({
         nombre: '',
         descripcion: '',
-        video: ''
+        video: '',
+        categoria: ''
     });
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
-    useEffect(() => { !store.token ? navigate("/login") : null }, [store.token]);
+    // useEffect(() => { !store.token ? navigate("/login") : null }, [store.token]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,28 +24,25 @@ export const Admin = () => {
         }));
     }
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         actions.addExercise(newExercise);
-        setNewExercise({ nombre: '', descripcion: '', video: '' });
+        setNewExercise({ nombre: '', descripcion: '', video: '', categoria: '' }); 
     }
-
+    
     return (
-        store.token &&
+        // store.token &&
         <div className="container-fluid p-0">
             <div className="container-fluid fondo">
                 <div className="container">
-                    <div className="row justify-content-between py-3">
-                        <div className="col-12 col-md-7 d-flex align-items-end">
-                            <h1 className="text ps-5">Hola desde el admin</h1>
-                        </div>
-                        <div className="col-12 col-md-5 text-end">
-                            <img className="imagen img-thumbnail justify-content-center" src="https://i.pravatar.cc/300" alt="fotoperfil" />
-                        </div>
+                    <div className="py-3">
+                    <h1 className="ps-5">Hola admin</h1>
+                        
                     </div>
                 </div>
             </div>
-            <div className="d-md-none" ></div>
+            
             <div className="container">
                 <div className="row justify-content-between align-items-end mt-5">
                     <div className="col-12 col-md-6">
@@ -100,6 +98,24 @@ export const Admin = () => {
                                         onChange={handleChange}
                                         required
                                     />
+                                </div>
+                                <div className="mb-3">
+                                    <label className="form-label fs-5 fw-bolder data-text">Categoría</label>
+                                    <select
+                                        className="form-select"
+                                        name="categoria"
+                                        value={newExercise.categoria}
+                                        onChange={handleChange}
+                                        required
+                                    >
+                                        <option value="">Seleccionar categoría</option>
+                                        <option value="backExercises">Chest Exercises</option>
+                                        <option value="backExercises">Back Exercises</option>
+                                        <option value="legExercises">Leg Exercises</option>
+                                        <option value="armExercises">Arms Exercises</option>
+                                        <option value="armExercises">Abdomen Exercises</option>
+                                        <option value="armExercises">Shoulders Exercises</option>
+                                    </select>
                                 </div>
                                 <button type="submit" className="btn btn-primary">Agregar Ejercicio</button>
                             </form>

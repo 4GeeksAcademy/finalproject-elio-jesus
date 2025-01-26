@@ -5,7 +5,7 @@ import { Context } from "../store/appContext";
 
 
 
-export const Exercises = () => {
+const Exercises = () => {
     const exercises = [
         {
             id: 'chest_exercises',
@@ -68,3 +68,4 @@ export const Exercises = () => {
 };
 
 
+export default Exercises
