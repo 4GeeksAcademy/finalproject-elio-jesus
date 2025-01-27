@@ -34,24 +34,24 @@ export const Admin = () => {
     return (
         // store.token &&
         <div className="container-fluid p-0">
-            <div className="container-fluid fondo">
-                <div className="container">
+            <div className="container-fluid  bg-dark">
+                <div className="container ">
                     <div className="py-3">
-                    <h1 className="ps-5">Hola admin</h1>
+                    <h1 className="text ps-5"> {store.currentUser['firstName']}</h1>
                         
                     </div>
                 </div>
             </div>
             
-            <div className="container">
-                <div className="row justify-content-between align-items-end mt-5">
-                    <div className="col-12 col-md-6">
+            <div className="container mb-2">
+                <div className="row  mt-2 ">
+                    <div className="col-12 col-md-6 mt-8">
                         <div className="border border-3 rounded-3 p-5">
                             <div className="d-flex justify-content-between align-items-center">
                                 <h3>Detalles de administrador</h3>
-                                {/* <Link to="/edit_profile">
+                                <Link to="/edit_profile">
                                     Editar Información
-                                </Link> */}
+                                </Link>
                             </div>
                             <p className="fs-5 fw-bolder data-text">Correo</p>
                             <p className="fs-6">{store.currentUser['email']}</p>
