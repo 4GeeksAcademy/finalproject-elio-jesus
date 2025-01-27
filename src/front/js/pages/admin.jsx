@@ -28,22 +28,26 @@ export const Admin = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         actions.addExercise(newExercise);
-        setNewExercise({ nombre: '', descripcion: '', video: '', categoria: '' }); 
+        setNewExercise({ nombre: '', descripcion: '', video: '', categoria: '' });
     }
+
     
+
+     
+
     return (
         // store.token &&
-        <div className="container-fluid p-0">
+        <div className="container-fluid  p-0">
             <div className="container-fluid  bg-dark">
                 <div className="container ">
                     <div className="py-3">
-                    <h1 className="text ps-5"> {store.currentUser['firstName']}</h1>
-                        
+                        <h1 className="text ps-5"> {store.currentUser['firstName']}</h1>
+
                     </div>
                 </div>
             </div>
-            
-            <div className="container mb-2">
+
+            <div className="container pb-5 ">
                 <div className="row  mt-2 ">
                     <div className="col-12 col-md-6 mt-8">
                         <div className="border border-3 rounded-3 p-5">
@@ -109,12 +113,19 @@ export const Admin = () => {
                                         required
                                     >
                                         <option value="">Seleccionar categoría</option>
-                                        <option value="backExercises">Chest Exercises</option>
-                                        <option value="backExercises">Back Exercises</option>
-                                        <option value="legExercises">Leg Exercises</option>
-                                        <option value="armExercises">Arms Exercises</option>
+                                        <option value="chest">Pectoral </option>
+                                        <option value="back">Espalda </option>
+
+                                        <option value="biceps">Bicep</option>
+                                        <option value="triceps">Tricep</option>
+                                        <option value="forearm">Antebrazo</option>
+                                        <option value="quadriceps">Quadriceps</option>
+                                        <option value="femoral">Femoral</option>
+                                        <option value="calf">Pantorrilla</option>
+                                        <option value="gluteus">Gluteos</option>
+
                                         <option value="armExercises">Abdomen Exercises</option>
-                                        <option value="armExercises">Shoulders Exercises</option>
+                                        <option value="shoulder">Hombro</option>
                                     </select>
                                 </div>
                                 <button type="submit" className="btn btn-primary">Agregar Ejercicio</button>
@@ -123,6 +134,19 @@ export const Admin = () => {
                     </div>
                 </div>
             </div>
+
+            <div className="row contenedor mt-2">
+                <div className="col-12">
+                    <div className="border border-3 rounded-3 p-5">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h3>Usuarios</h3>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+
         </div>
+       
     );
 };

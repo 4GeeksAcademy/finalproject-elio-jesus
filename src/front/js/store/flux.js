@@ -207,10 +207,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 }
             },
-
+                // saveExercises
             addExercise: async (exercise) => {
                 try {
-                    const response = await fetch(process.env.BACKEND_URL + "/addExercise", {
+                    const response = await fetch(process.env.BACKEND_URL + "/saveExercise", {
                         method: "POST",
                         headers: {
                             "Authorization": `Bearer ${getStore().token}`,
@@ -225,8 +225,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     return error;
                 }
-            }
+            },
+
             
+            
+
 
             
 
