@@ -32,7 +32,9 @@ export const Admin = () => {
     }
 
     
-
+    useEffect(() => {
+        actions.getUsers(); 
+    }, []);
      
 
     return (
@@ -136,10 +138,26 @@ export const Admin = () => {
             </div>
 
             <div className="row contenedor mt-2">
-                <div className="col-12">
+                <div className="col-12 col-md-6">
                     <div className="border border-3 rounded-3 p-5">
                         <div className="d-flex justify-content-between align-items-center">
                             <h3>Usuarios</h3>
+                        </div>
+                        <ul>
+                            {store.users && store.users.map((user, index) => (
+                                <li key={index}>
+                                    <p className="fs-5 fw-bolder data-text">Nombre: {user.firstName} {user.lastName}</p>
+                                    <p className="fs-6">Correo: {user.email}</p>
+                                    <p className="fs-6">Cumpleaños: {!user.birthDate ? "No cargado" : user.birthDate}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+                <div className="col-12 col-md-6">
+                    <div className="border border-3 rounded-3 p-5">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <h3>Usuarios por aprobacion</h3>
                         </div>
                        
                     </div>

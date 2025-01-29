@@ -232,3 +232,11 @@ def updateStatus():
     except Exception as error:
        return jsonify({'error': str(error)})
     
+@api.route('/getUsers', methods=['GET'])
+@jwt_required()
+def getUsers():
+    try:
+        users = User.query.all()
+        return jsonify({"users": [user.serialize() for user in users]}), 200
+    except Exception as error:
+        return jsonify({'error': str(error)}), 500

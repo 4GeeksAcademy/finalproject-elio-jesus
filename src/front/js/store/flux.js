@@ -2,7 +2,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             token: JSON.parse(localStorage.getItem("token")) || null,
-            currentUser: JSON.parse(localStorage.getItem("currentUser")) ?? null
+            currentUser: JSON.parse(localStorage.getItem("currentUser")) ?? null,
+            users: []
         },
         actions: {
 
@@ -61,7 +62,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 localStorage.removeItem("currentUser")
             },
 
-            //obtener informacion de usuario
+
 
             // editar usuario
             updateContact: async (contact) => {
@@ -106,126 +107,149 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            //obtener user
-            getUser: async () => {
-                try {
-                    const response = await fetch(process.env.BACKEND_URL + "/getUser", {
-                        method: "GET",
-                        headers: {
-                            "Authorization": `Bearer ${getStore().token}`,
+                //obtener informacion de usuario
+                getUser: async () => {
+                    try {
+                        const response = await fetch(process.env.BACKEND_URL + "/getUser", {
+                            method: "GET",
+                            headers: {
+                                "Authorization": `Bearer ${getStore().token}`,
+                            }
+                        });
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            setStore({ currentUser: data.currentUser });
+                            localStorage.setItem('currentUser', JSON.stringify(data.currentUser));
                         }
-                    })
-                    const data = await response.json()
+                        return (response.status);
 
-                    if (response.ok) {
-                        setStore({ currentUser: data.currentUser })
-                        localStorage.setItem('currentUser', JSON.stringify(data.currentUser))
+                    } catch (error) {
+                        return (error);
                     }
-                    return (response.status)
+                },
 
-                } catch (error) {
-                    return (error)
-                }
-            },
+                // obtener usuarios
+                getUsers: async () => {
+                    try {
+                        const response = await fetch(process.env.BACKEND_URL + "/getUsers", {
+                            method: "GET",
+                            headers: {
+                                "Authorization": `Bearer ${getStore().token}`
+                            }
+                        });
+                        const data = await response.json();
 
-            //guardar social
-            saveSocial: async (social) => {
-                try {
-                    const response = await fetch(process.env.BACKEND_URL + "/saveSocial", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${getStore().token}`,
-                            'Content-Type': "application/json"
+                        if (response.ok) {
+                            setStore({ users: data.users });
+                        }
+                        return (response.status);
+
+                    } catch (error) {
+                        return (error);
+                    }
+                },
+
+
+
+                //guardar social
+                saveSocial: async (social) => {
+                    try {
+                        const response = await fetch(process.env.BACKEND_URL + "/saveSocial", {
+                            method: "POST",
+                            headers: {
+                                "Authorization": `Bearer ${getStore().token}`,
+                                'Content-Type': "application/json"
+                            },
+                            body: JSON.stringify(social)
+                        })
+                        if (response.ok) {
+                            getActions().getUser()
+                        }
+                        return (response.status)
+
+                    } catch (error) {
+                        return (error)
+                    }
+                },
+
+                    saveRequest: async (request) => {
+                        try {
+                            const response = await fetch(process.env.BACKEND_URL + "/saveRequest", {
+                                method: "POST",
+                                headers: {
+                                    "Authorization": `Bearer ${getStore().token}`,
+                                    "Content-Type": "application/json"
+                                },
+                                body: JSON.stringify(request)
+                            })
+                            if (response.ok) {
+                                getActions().getUser()
+                            }
+                            return (response.status)
+                        } catch (error) {
+                            return (error)
+                        }
+                    },
+
+                        // getStatus: async () => {
+                        //     try {
+                        //         const response = await fetch(process.env.BACKEND_URL + "/getStatus", {
+                        //             method: "GET",
+                        //             headers: {
+                        //                 "Authorization": `Bearer ${getStore().token}`,
+                        //             }
+                        //         })
+                        //         const data = await response.json()
+
+                        //         if (response.ok) {
+                        //             return (data, response.status)
+
+                        //         }
+
+                        //     } catch (error) {
+                        //         return (error)
+                        //     }
+
+                        // },
+
+                        updateStatus: async (status) => {
+                            try {
+                                const response = await fetch(process.env.BACKEND_URL + "/updateStatus", {
+                                    method: "PUT",
+                                    headers: {
+                                        "Authorization": `Bearer ${getStore().token}`,
+                                        'Content-Type': "application/json"
+                                    },
+                                    body: JSON.stringify(status)
+                                })
+                                if (response.ok) {
+                                    getActions().getUser()
+                                }
+
+                            } catch (error) {
+
+                            }
                         },
-                        body: JSON.stringify(social)
-                    })
-                    if (response.ok) {
-                        getActions().getUser()
-                    }
-                    return (response.status)
-
-                } catch (error) {
-                    return (error)
-                }
-            },
-
-            saveRequest: async (request) => {
-                try {
-                    const response = await fetch(process.env.BACKEND_URL + "/saveRequest", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${getStore().token}`,
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(request)
-                    })
-                    if(response.ok){
-                        getActions().getUser()
-                    }
-                    return (response.status)
-                } catch (error) {
-                    return (error)
-                }
-            },
-
-            // getStatus: async () => {
-            //     try {
-            //         const response = await fetch(process.env.BACKEND_URL + "/getStatus", {
-            //             method: "GET",
-            //             headers: {
-            //                 "Authorization": `Bearer ${getStore().token}`,
-            //             }
-            //         })
-            //         const data = await response.json()
-
-            //         if (response.ok) {
-            //             return (data, response.status)
-
-            //         }
-
-            //     } catch (error) {
-            //         return (error)
-            //     }
-
-            // },
-
-            updateStatus: async (status) => {
-                try{
-                    const response = await fetch(process.env.BACKEND_URL+"/updateStatus",{
-                        method:"PUT",
-                        headers:{
-                            "Authorization": `Bearer ${getStore().token}`,
-                            'Content-Type': "application/json"
-                        },
-                        body:JSON.stringify(status)
-                    })
-                    if (response.ok){
-                       getActions().getUser() 
-                    }
-
-                }catch(error){
-
-                }
-            },
-                // saveExercises
-            addExercise: async (exercise) => {
-                try {
-                    const response = await fetch(process.env.BACKEND_URL + "/saveExercise", {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${getStore().token}`,
-                            'Content-Type': "application/json"
-                        },
-                        body: JSON.stringify(exercise)
-                    });
-                    if (response.ok) {
-                        getActions().getUser();
-                    }
-                    return response.status;
-                } catch (error) {
-                    return error;
-                }
-            },
+                            // saveExercises
+                            addExercise: async (exercise) => {
+                                try {
+                                    const response = await fetch(process.env.BACKEND_URL + "/saveExercise", {
+                                        method: "POST",
+                                        headers: {
+                                            "Authorization": `Bearer ${getStore().token}`,
+                                            'Content-Type': "application/json"
+                                        },
+                                        body: JSON.stringify(exercise)
+                                    });
+                                    if (response.ok) {
+                                        getActions().getUser();
+                                    }
+                                    return response.status;
+                                } catch (error) {
+                                    return error;
+                                }
+                            },
 
             
             
@@ -234,7 +258,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             
 
         }
+        };
     };
-};
 
-export default getState;
+    export default getState;
