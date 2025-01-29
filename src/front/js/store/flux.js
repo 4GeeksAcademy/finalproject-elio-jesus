@@ -130,25 +130,25 @@ const getState = ({ getStore, getActions, setStore }) => {
                 },
 
                 // obtener usuarios
-                getUsers: async () => {
-                    try {
-                        const response = await fetch(process.env.BACKEND_URL + "/getUsers", {
-                            method: "GET",
-                            headers: {
-                                "Authorization": `Bearer ${getStore().token}`
-                            }
-                        });
-                        const data = await response.json();
+                // getUsers: async () => {
+                //     try {
+                //         const response = await fetch(process.env.BACKEND_URL + "/getUsers", {
+                //             method: "GET",
+                //             headers: {
+                //                 "Authorization": `Bearer ${getStore().token}`
+                //             }
+                //         });
+                //         const data = await response.json();
 
-                        if (response.ok) {
-                            setStore({ users: data.users });
-                        }
-                        return (response.status);
+                //         if (response.ok) {
+                //             setStore({ users: data.users });
+                //         }
+                //         return (response.status);
 
-                    } catch (error) {
-                        return (error);
-                    }
-                },
+                //     } catch (error) {
+                //         return (error);
+                //     }
+                // },
 
 
 

@@ -240,3 +240,4 @@ def getUsers():
         return jsonify({"users": [user.serialize() for user in users]}), 200
     except Exception as error:
         return jsonify({'error': str(error)}), 500
+

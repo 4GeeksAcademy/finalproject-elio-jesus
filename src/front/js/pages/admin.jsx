@@ -11,10 +11,8 @@ export const Admin = () => {
         video: '',
         categoria: ''
     });
-
-    // const navigate = useNavigate();
-
-    // useEffect(() => { !store.token ? navigate("/login") : null }, [store.token]);
+    const [users, setUsers] = useState([]);
+    const [error, setError] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,49 +22,128 @@ export const Admin = () => {
         }));
     }
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         actions.addExercise(newExercise);
         setNewExercise({ nombre: '', descripcion: '', video: '', categoria: '' });
     }
 
-    
+    const fetchUsers = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + "/getUsers", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${store.token}`
+                }
+            });
+            const data = await response.json();
+
+            if (response.ok) {
+                setUsers(data.users);
+            } else {
+                setError(data.error || 'Error al obtener los usuarios');
+            }
+        } catch (error) {
+            setError('Error al conectar con el servidor');
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
-        actions.getUsers(); 
+        fetchUsers(); // Llamada a fetchUsers al montar el componente
     }, []);
-     
 
     return (
-        // store.token &&
-        <div className="container-fluid  p-0">
-            <div className="container-fluid  bg-dark">
-                <div className="container ">
-                    <div className="py-3">
-                        <h1 className="text ps-5"> {store.currentUser['firstName']}</h1>
+        <>
+            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li className="nav-item" role="presentation">
+                    <button className="nav-link active"
+                        id="pills-home-tab"
+                        data-bs-toggle="pill"
+                        data-bs-target="#pills-home"
+                        type="button"
+                        role="tab"
+                        aria-controls="pills-home"
+                        aria-selected="true"
+                    >Home
+                    </button>
+                </li>
+                <li className="nav-item" role="presentation">
+                    <button className="nav-link" 
+                    id="pills-usuarios-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#pills-usuarios" 
+                    type="button" 
+                    role="tab" 
+                    aria-controls="pills-usuarios" 
+                    aria-selected="false"
+                    >Usuarios
+                    </button>
+                </li>
+                <li className="nav-item" role="presentation">
+                    <button className="nav-link" 
+                    id="pills-ejercicios-tab" 
+                    data-bs-toggle="pill" 
+                    data-bs-target="#pills-ejercicios" 
+                    type="button"
+                    role="tab" 
+                    aria-controls="pills-ejercicios" 
+                    aria-selected="false"
+                    >Ejercicios
+                    </button>
+                </li>
+            </ul>
+            <div className="tab-content" id="pills-tabContent">
+                <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div className="container pb-5">
+                        <div className="row mt-2">
+                            <div className="col-12 col-md-6 mt-8">
+                                <div className="border border-3 rounded-3 p-5">
+                                    <div className="d-flex justify-content-between align-items-center">
+                                        <h3>Detalles de administrador</h3>
+                                        <Link to="/edit_profile">
+                                            Editar Información
+                                        </Link>
+                                    </div>
+                                    <p className="fs-5 fw-bolder data-text">Correo</p>
+                                    <p className="fs-6">{store.currentUser['email']}</p>
+                                    <p className="fs-5 fw-bolder data-text">Nombre</p>
+                                    <p className="fs-6">{store.currentUser['firstName']} {store.currentUser['lastName']}</p>
+                                    <p className="fs-5 fw-bolder data-text">Cumpleaños</p>
+                                    <p className="fs-6">{!store.currentUser['birthDate'] ? "No cargado" : store.currentUser['birthDate']}</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div className="tab-pane fade" id="pills-usuarios" role="tabpanel" aria-labelledby="pills-usuarios-tab">
+                    <div className="container pb-5">
+
+                        <div className="border border-3 rounded-3 p-5">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h3>Usuarios</h3>
+                            </div>
+                            {error ? (
+                                <p className="text-danger">{error}</p>
+                            ) : (
+                                <ul>
+                                    {users && users.map((user, index) => (
+                                        <li key={index}>
+                                            <p className="fs-6">id: {user.id}</p>
+                                            <p className="fs-5 fw-bolder data-text">Nombre: {user.firstName} {user.lastName}</p>
+                                            <p className="fs-6">Correo: {user.email}</p>
+
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
 
                     </div>
                 </div>
-            </div>
 
-            <div className="container pb-5 ">
-                <div className="row  mt-2 ">
-                    <div className="col-12 col-md-6 mt-8">
-                        <div className="border border-3 rounded-3 p-5">
-                            <div className="d-flex justify-content-between align-items-center">
-                                <h3>Detalles de administrador</h3>
-                                <Link to="/edit_profile">
-                                    Editar Información
-                                </Link>
-                            </div>
-                            <p className="fs-5 fw-bolder data-text">Correo</p>
-                            <p className="fs-6">{store.currentUser['email']}</p>
-                            <p className="fs-5 fw-bolder data-text">Nombre</p>
-                            <p className="fs-6">{store.currentUser['firstName']} {store.currentUser['lastName']}</p>
-                            <p className="fs-5 fw-bolder data-text">Cumpleaños</p>
-                            <p className="fs-6">{!store.currentUser['birthDate'] ? "No cargado" : store.currentUser['birthDate']}</p>
-                        </div>
-                    </div>
+                <div className="tab-pane fade" id="pills-ejercicios" role="tabpanel" aria-labelledby="pills-ejercicios-tab">
                     <div className="col-12 col-md-6">
                         <div className="data border border-3 rounded-3 p-5">
                             <div className="d-flex justify-content-between align-items-center">
@@ -115,9 +192,8 @@ export const Admin = () => {
                                         required
                                     >
                                         <option value="">Seleccionar categoría</option>
-                                        <option value="chest">Pectoral </option>
-                                        <option value="back">Espalda </option>
-
+                                        <option value="chest">Pectoral</option>
+                                        <option value="back">Espalda</option>
                                         <option value="biceps">Bicep</option>
                                         <option value="triceps">Tricep</option>
                                         <option value="forearm">Antebrazo</option>
@@ -125,8 +201,7 @@ export const Admin = () => {
                                         <option value="femoral">Femoral</option>
                                         <option value="calf">Pantorrilla</option>
                                         <option value="gluteus">Gluteos</option>
-
-                                        <option value="armExercises">Abdomen Exercises</option>
+                                        <option value="abdominal">Abdominales</option>
                                         <option value="shoulder">Hombro</option>
                                     </select>
                                 </div>
@@ -136,35 +211,6 @@ export const Admin = () => {
                     </div>
                 </div>
             </div>
-
-            <div className="row contenedor mt-2">
-                <div className="col-12 col-md-6">
-                    <div className="border border-3 rounded-3 p-5">
-                        <div className="d-flex justify-content-between align-items-center">
-                            <h3>Usuarios</h3>
-                        </div>
-                        <ul>
-                            {store.users && store.users.map((user, index) => (
-                                <li key={index}>
-                                    <p className="fs-5 fw-bolder data-text">Nombre: {user.firstName} {user.lastName}</p>
-                                    <p className="fs-6">Correo: {user.email}</p>
-                                    <p className="fs-6">Cumpleaños: {!user.birthDate ? "No cargado" : user.birthDate}</p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                </div>
-                <div className="col-12 col-md-6">
-                    <div className="border border-3 rounded-3 p-5">
-                        <div className="d-flex justify-content-between align-items-center">
-                            <h3>Usuarios por aprobacion</h3>
-                        </div>
-                       
-                    </div>
-                </div>
-            </div>
-
-        </div>
-       
+        </>
     );
 };
