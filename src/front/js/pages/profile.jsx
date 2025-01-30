@@ -6,8 +6,8 @@ import "../../styles/profile.css"
 
 const Profile = () => {
     const { store, actions } = useContext(Context)
-    const [measures, setMeasures] = useState(null)
-    const [social, setSocial] = useState(null)
+    const [measures, setMeasures] = useState(store.currentUser.measures)
+    const [social, setSocial] = useState(store.currentUser.social)
     const [error, setError] = useState('')
     // const [sendStatus,setSendStatus] = useState()
     const [request, setRequest] = useState(null)
@@ -25,13 +25,8 @@ const Profile = () => {
 
     const handleSubmit = async (evt) => {
         evt.preventDefault()
-        const response = await actions.saveMeasures(measures)
-        if (response == 200) {
-            setSave(true)
-        } else if (response == 400) {
-            setError('Todos los campos son necesarios')
-        }
     }
+
 
     const handleChangeSocial = (evt) => {
         setSocial({
@@ -40,15 +35,7 @@ const Profile = () => {
         })
     }
 
-    const handleSubmitSocial = async (evt) => {
-        evt.preventDefault()
-        const response = await actions.saveSocial(social)
-        if (response == 200) {
-            setSave(true)
-        } else if (response == 400) {
-            setError('Todos los campos son necesarios')
-        }
-    }
+
 
     const handleChangeServices = (evt) => {
         setRequest({
@@ -66,8 +53,59 @@ const Profile = () => {
         const response = await actions.saveRequest(request)
         if (response == 200) {
             setSave(true)
+            setTimeout(() => {
+                setSave(false);
+            }, 2000)
         } else if (response == 400) {
             setError('Todos los campos son necesarios')
+        }
+    }
+
+    const procesarSocial = async (bandera) => {
+        if (bandera == "update") {
+            const response = await actions.updateSocial(social)
+            if (response == 200) {
+                setSave(true)
+                setTimeout(() => {
+                    setSave(false);
+                }, 2000)
+            } else if (response == 400) {
+                setError('Todos los campos son necesarios')
+            }
+        } else {
+            const response = await actions.saveSocial(social)
+            if (response == 200) {
+                setSave(true)
+                setTimeout(() => {
+                    setSave(false);
+                }, 2000)
+            } else if (response == 400) {
+                setError('Todos los campos son necesarios')
+            }
+        }
+    }
+
+    const procesarMeasures = async (bandera) => {
+        if (bandera == "update") {
+            const response = await actions.updateMeasures(measures)
+            if (response == 200) {
+                setSave(true)
+                setTimeout(() => {
+                    setSave(false);
+                }, 2000)
+            } else if (response == 400) {
+                setError('Todos los campos son necesarios')
+            }
+        } else {
+            const response = await actions.saveMeasures(measures)
+            if (response == 200) {
+                setSave(true)
+                setTimeout(() => {
+                    setSave(false);
+                }, 2000)
+            } else if (response == 400) {
+                setError('Todos los campos son necesarios')
+            }
         }
     }
 
@@ -128,7 +166,7 @@ const Profile = () => {
                                     <p className="fs-6">{!store?.currentUser.measures.biceps ? "No cargado" : store?.currentUser.measures.biceps}</p>
                                 </div>
                                 <div >
-                                    {!store.currentUser.measures ?
+                                    {Object.keys(store?.currentUser.measures).length <= 0 ?
                                         <button type="button" className="btn text mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                             Cargar Medidas
                                         </button> : <button type="button" className="btn text" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -167,9 +205,13 @@ const Profile = () => {
                         <div className="border border-3 rounded-3 p-5">
                             <div className="d-flex justify-content-between">
                                 <h5 className="fw-bold mb-2">Redes</h5>
-                                <button type="button" className="btn text" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Cargar Redes
-                                </button>
+                                {Object.keys(store?.currentUser.social).length <= 0 ?
+                                    <button type="button" className="btn text mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                        Cargar Redes
+                                    </button> : <button type="button" className="btn text" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                        Editar
+                                    </button>
+                                }
                             </div>
                             <div className="d-flex align-self-center">
                                 <i className="fa-brands fa-instagram icono"></i>
@@ -254,11 +296,11 @@ const Profile = () => {
                                     />
                                 </div>
                                 {
-                                    !store?.currentUser.measures ?
-                                        <button type="submit" onClick={()=>handleSubmit()} className="btn btn-primary">
+                                    Object.keys(store?.currentUser.measures).length <= 0 ?
+                                        <button type="buttom" onClick={() => procesarMeasures("save")} className="btn btn-primary">
                                             Guardar
                                         </button> :
-                                        <button type="submit" className="btn btn-secondary">
+                                        <button type="buttom" onClick={() => procesarMeasures("update")} className="btn btn-secondary">
                                             Editar
                                         </button>
                                 }
@@ -278,22 +320,22 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">Cuentas de Redes</h5>
+                            <h5 className="modal-title" id="exampleModalLabel1">Cuentas de Redes</h5>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form className="form w-50 align-self-center ms-3 my-3" onSubmit={handleSubmitSocial} >
+                            <form className="form w-50 align-self-center ms-3 my-3" onSubmit={handleSubmit} >
                                 <div className="mb-3">
                                     <label htmlFor="inputIg" className="form-label">Intagram</label>
                                     <input
                                         type="text"
                                         className="form-control"
-                                        name="ig"
-                                        value={social?.ig}
+                                        name="instagram"
+                                        value={social?.instagram}
                                         id="inputIg"
                                         onChange={handleChangeSocial}
                                         required
@@ -304,8 +346,8 @@ const Profile = () => {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        name="face"
-                                        value={social?.face}
+                                        name="facebook"
+                                        value={social?.facebook}
                                         id="inputFace"
                                         onChange={handleChangeSocial}
                                         required
@@ -323,7 +365,15 @@ const Profile = () => {
                                         required
                                     />
                                 </div>
-                                <button type="submit" className="btn btn-primary">Guardar</button>
+                                {
+                                    Object.keys(store?.currentUser.social).length <= 0 ?
+                                        <button type="buttom" onClick={() => procesarSocial("save")} className="btn btn-primary">
+                                            Guardar
+                                        </button> :
+                                        <button type="buttom" onClick={() => procesarSocial("update")} className="btn btn-secondary">
+                                            Editar
+                                        </button>
+                                }
                             </form>
                         </div>
                         {save && <div className="alert alert-success mt-3" role="alert">

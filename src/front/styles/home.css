@@ -1,8 +1,33 @@
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
   
+}
+
+h5,h2{
+    font-family: "Nunito Sans", serif;
+    font-weight:700 ;
+    font-size:30px
+}
+
+p{
+    font-family: "Nunito Sans", serif;
+    font-weight: 300;  
+}
+
+h1,h3{
+    font-family: "Nunito Sans", serif;
+    font-weight:600 ; 
+}
+
+.nunito-sans-text {
+    font-family: "Nunito Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100,
+      "YTLC" 500;
 }
 
 .hero {
@@ -29,7 +54,7 @@ body {
 
 .imgs {
     height: 400px;
-    width: auto;
+    width: 100%;
 }
 
 .testimonialI {
@@ -42,9 +67,17 @@ body {
     width: 300px;;
 }
 
+.margin{
+    padding-bottom:50px;
+}
+
 .btn {
     background-color: rgb(63, 166, 37);
     border: 0;
+}
+
+.color{
+    color: rgb(63, 166, 37);
 }
 
 .footer { 

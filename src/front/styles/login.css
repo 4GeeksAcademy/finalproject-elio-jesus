@@ -7,3 +7,7 @@
     color: aliceblue;
 }
 
+.traslate2{
+    transform: translateY(8rem);
+}
+
