@@ -55,52 +55,61 @@ export const Admin = () => {
 
     return (
         <>
-            <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li className="nav-item" role="presentation">
-                    <button className="nav-link active"
-                        id="pills-home-tab"
-                        data-bs-toggle="pill"
-                        data-bs-target="#pills-home"
-                        type="button"
-                        role="tab"
-                        aria-controls="pills-home"
-                        aria-selected="true"
-                    >Home
-                    </button>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <button className="nav-link" 
-                    id="pills-usuarios-tab" 
-                    data-bs-toggle="pill" 
-                    data-bs-target="#pills-usuarios" 
-                    type="button" 
-                    role="tab" 
-                    aria-controls="pills-usuarios" 
-                    aria-selected="false"
-                    >Usuarios
-                    </button>
-                </li>
-                <li className="nav-item" role="presentation">
-                    <button className="nav-link" 
-                    id="pills-ejercicios-tab" 
-                    data-bs-toggle="pill" 
-                    data-bs-target="#pills-ejercicios" 
-                    type="button"
-                    role="tab" 
-                    aria-controls="pills-ejercicios" 
-                    aria-selected="false"
-                    >Ejercicios
-                    </button>
-                </li>
-            </ul>
+            <div className="container d-flex justify-content-center mt-5">
+                <ul className="nav nav-pills mb-3"
+                    id="pills-tab"
+                    role="tablist"
+                >
+                    <li className="nav-item" role="presentation">
+                        <button className="nav-link active"
+                            id="pills-home-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-home"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-home"
+                            aria-selected="true"
+                        >Home
+                        </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                        <button className="nav-link"
+                            id="pills-usuarios-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-usuarios"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-usuarios"
+                            aria-selected="false"
+                        >Usuarios
+                        </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                        <button className="nav-link"
+                            id="pills-ejercicios-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-ejercicios"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-ejercicios"
+                            aria-selected="false"
+                        >Ejercicios
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
             <div className="tab-content" id="pills-tabContent">
-                <div className="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div className="container pb-5">
-                        <div className="row mt-2">
-                            <div className="col-12 col-md-6 mt-8">
+                <div className="tab-pane fade show active "
+                    id="pills-home" role="tabpanel"
+                    aria-labelledby="pills-home-tab"
+                >
+                    <div className="container d-flex justify-content-center mt-5 ">
+                        
+                            
                                 <div className="border border-3 rounded-3 p-5">
                                     <div className="d-flex justify-content-between align-items-center">
-                                        <h3>Detalles de administrador</h3>
+                                        <h3 className="me-5">Detalles de administrador</h3>
                                         <Link to="/edit_profile">
                                             Editar Información
                                         </Link>
@@ -112,12 +121,16 @@ export const Admin = () => {
                                     <p className="fs-5 fw-bolder data-text">Cumpleaños</p>
                                     <p className="fs-6">{!store.currentUser['birthDate'] ? "No cargado" : store.currentUser['birthDate']}</p>
                                 </div>
-                            </div>
+                            
 
-                        </div>
+                        
                     </div>
                 </div>
-                <div className="tab-pane fade" id="pills-usuarios" role="tabpanel" aria-labelledby="pills-usuarios-tab">
+                <div className="tab-pane fade"
+                    id="pills-usuarios"
+                    role="tabpanel"
+                    aria-labelledby="pills-usuarios-tab"
+                >
                     <div className="container pb-5">
 
                         <div className="border border-3 rounded-3 p-5">
@@ -130,9 +143,8 @@ export const Admin = () => {
                                 <ul>
                                     {users && users.map((user, index) => (
                                         <li key={index}>
-                                            <p className="fs-6">id: {user.id}</p>
-                                            <p className="fs-5 fw-bolder data-text">Nombre: {user.firstName} {user.lastName}</p>
-                                            <p className="fs-6">Correo: {user.email}</p>
+                                            <p className="fs-6">id: {user.id} Nombre: {user.firstName} {user.lastName} Correo: {user.email} </p>
+
 
                                         </li>
                                     ))}
