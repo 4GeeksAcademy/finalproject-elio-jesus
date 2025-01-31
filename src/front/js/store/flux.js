@@ -1,3 +1,4 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
@@ -106,6 +107,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            //editar medidas
+            updateMeasures: async (measures) =>{
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/updateMeasures", {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": `Bearer ${getStore().token}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(measures)
+                    })
+
+                    if (response.ok) {
+                        getActions().getUser()
+                    }
+                    return (response.status)
+
+                } catch (error) {
+                    return (error)
+                }
+            },
+
             //obtener user
             getUser: async () => {
                 try {
@@ -139,6 +162,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(social)
                     })
+                    if (response.ok) {
+                        getActions().getUser()
+                    }
+                    return (response.status)
+
+                } catch (error) {
+                    return (error)
+                }
+            },
+
+            //editar social
+            updateSocial: async (social) =>{
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/updateSocial", {
+                        method: "PUT",
+                        headers: {
+                            "Authorization": `Bearer ${getStore().token}`,
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(social)
+                    })
+
                     if (response.ok) {
                         getActions().getUser()
                     }
@@ -206,7 +251,42 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }catch(error){
 
                 }
+            },
+
+            resetPassword: async (email) =>{
+                try{
+                    const response = await fetch(process.env.BACKEND_URL+'/reset_password',{
+                        method:"POST",
+                        headers:{
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify(email)
+                    })
+                    return (response.status)
+                }catch(error){
+                    return(error)
+                }
+            },
+
+            updatePassword: async (token,newpassword)=>{
+                try{
+                    const response = await fetch(process.env.BACKEND_URL+"/update_password",{
+                        method:"PUT",
+                        headers:{
+                            "Authorization":`Bearer ${token}`,
+                            "Content-Type":"application/json"
+                        },
+                        body:JSON.stringify(newpassword) 
+                    })
+
+                    return(response.status)
+
+                }catch(error){
+                    return (error)
+                }
             }
+
+        
 
         }
     };

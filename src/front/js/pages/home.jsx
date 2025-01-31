@@ -10,7 +10,7 @@ export const Home = () => {
     const [tmb, setTmb] = useState(0);
 
     const calculateTMB = () => {
-        let tmbResult = 10 * weight + 6.25 * height - 5 * age;
+        let tmbResult = (10 * weight) + (6.25 * height) - (5 * age);
         if (gender === "male") {
             tmbResult += 5;
         } else if (gender === "female") {
@@ -21,89 +21,87 @@ export const Home = () => {
 
     return (
         <div>
-           
-           {/* Hero Section */}
-			<section className="hero">
-				<h2>Bienvenidos a Gym Parnert</h2>
-				<p>Tu Sitio de entrenamiento</p>
-			</section>
 
-			{/* services */}
+            {/* Hero Section */}
+            <section className="hero">
+                <h1>Bienvenidos a Gym Parnert</h1>
+                <h3>Tu Sitio de entrenamiento</h3>
+            </section>
 
-			<section className=" mb-3 pt-4 cards" >
-				<div className="row">
-					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
-					</div>
-					<div className="col-md-6 d-flex align-items-center">
-						<div className="pt-4">
-							<h5 className="card-title text-center pt-4 ps-4">Ejercicios</h5>
-							<p className="card-text text-center">En nuestra página encontraras una serie de ejercicios y rutinas
-								según sea tu necesidad
-							</p>
-							<div className="d-flex justify-content-center">
-								<button className="btn btn-dark">dime mas</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section className=" mb-3 pt-4 cards" >
-				<div className="row">
-					<div className="col-md-6 d-flex align-items-center">
-						<div className="">
-							<h5 className="card-title text-center pt-4">Profesionales</h5>
-							<p className="card-text text-center ps-4"> En nuestra página tendrás la mejor asesoria de Profesionales
-								con experiencia en sus áreas, tales como: Nutricionistas, Fisioterapeutas y entrenadores. Podrás
-								agendar citas con ellos y obtener resultados.
-							</p>
-							<div className="d-flex justify-content-center">
-								<button className="btn btn-dark">dime mas</button>
-							</div>
-						</div>
-					</div>
-					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
-					</div>
-				</div>
-			</section>
-
-
-
-			<section className=" mb-3 pt-4 cards" >
-				<div className="row">
-					<div className="col-md-6">
-						<img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
-					</div>
-					<div className="col-md-6 d-flex align-items-center">
-						<div className="">
-							<h5 className="card-title text-center pt-4">Ejercicios</h5>
-							<p className="card-text text-center ps-4">En nuestra página encontraras una serie de ejercicios y rutinas
-								según sea tu necesidad
-							</p>
-							<div className="d-flex justify-content-center">
-								<button className="btn btn-dark">dime mas</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-            {/* Calculator */}
-			<div className="container">
-                <div className="row pt-4 pb-2">
-                    <div className="col-md-6">
-                    <h5 className="card-title text-center pt-4">ingresa tus datos aquí</h5>
+            {/* services */}
+            <div className="container">
+                <div className="row mt-5 pb-5">
+                    <div className="col-12 col-md-6">
+                        <img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs" alt="..." />
                     </div>
-                    <div className="col-md-6">
-                    <h5 className="card-title text-center pt-4">Calculadora de carga de calorías</h5>
+                    <div className="col-md-6 d-flex align-items-center">
+                        <div className="pt-4">
+                            <h5 className="card-title text-center pt-4 mb-5">Ejercicios</h5>
+                            <p className="card-text text-center mb-5">En nuestra página encontraras una serie de ejercicios y rutinas
+                                según sea tu necesidad
+                            </p>
+                            <div className="d-flex justify-content-center">
+                                <button className="btn btn-dark">Ver mas</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div className="row">
+                <hr />
+
+                <div className="row pt-5 pb-5">
+                    <div className="col-md-6 d-flex align-items-center">
+                        <div className="">
+                            <h5 className="card-title text-center pt-4 mb-5">Profesionales</h5>
+                            <p className="card-text text-center mb-5"> En nuestra página tendrás la mejor asesoria de Profesionales
+                                con experiencia en sus áreas, tales como: Nutricionistas, Fisioterapeutas y entrenadores. Podrás
+                                agendar citas con ellos y obtener resultados.
+                            </p>
+                            <div className="d-flex justify-content-center mt-2">
+                                <button className="btn btn-dark">Ver mas</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12 col-md-6">
+                        <img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
+                    </div>
+                </div>
+
+                <hr />
+
+
+                <div className="row pt-5 pb-5">
+                    <div className="col-12 col-md-6">
+                        <img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
+                    </div>
+                    <div className="col-md-6 d-flex align-items-center">
+                        <div className="">
+                            <h5 className="card-title text-center pt-4 mb-5">Ejercicios</h5>
+                            <p className="card-text text-center ps-4 mb-5">En nuestra página encontraras una serie de ejercicios y rutinas
+                                según sea tu necesidad
+                            </p>
+                            <div className="d-flex justify-content-center ">
+                                <button className="btn btn-dark">Ver mas</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                {/* Calculator */}
+
+                <div className="row pt-5 mb-4">
+                    <div className="col-md-6">
+                        <h5 className="card-title text-center ">Ingresa tus datos aquí</h5>
+                    </div>
+                    <div className="col-md-6">
+                        <h5 className="card-title text-center ">Calculadora de carga de calorías</h5>
+                    </div>
+                </div>
+
+                <div className="row pb-5">
                     <div className="col-md-6 d-flex justify-content-center">
-                        <section className="tmb-calculator ">
+                        <section className="tmb-calculator border border-success border-3 rounded p-4">
                             <div className="form-group ">
                                 <label className="pb-1 ms-3">Peso (kg):</label>
                                 <input
@@ -153,13 +151,17 @@ export const Home = () => {
                             )}
                         </section>
                     </div>
-                    <div className="col-md-6 text-center d-flex align-items-center">
-                        <p> Con esta calculadora de calorías y macros podrás determinar 
-                            exactamente cuánto debes comer ya sea para ganar músculo, para perder grasa 
-                            o mantenerte en tu peso
+                    <div className="col-md-6 text-center d-flex flex-column align-self-center ">
+                        <p> Esta calculadora te dará tus calorías de mantenimiento, en base a estas puedes comer menos para la perdida de grasa (deficit calórico) o 
+                            comer más para ganancia muscular (superavit calórico) 
+                        </p>
+                        <p className="fw-bold">Si quieres mas informacion sobre el tema oprime  
+                            <a className="ps-1" href="https://8metsbilbao.com/calorias-de-mantenimiento/#:~:text=Cuando%20hablamos%20de%20calor%C3%ADas%20de,un%20nivel%20de%20vida%20saludable.">
+                            aqui</a>
                         </p>
                     </div>
                 </div>
+
             </div>
         </div>
     );

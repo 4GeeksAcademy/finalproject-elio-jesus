@@ -31,10 +31,12 @@ const Login = () => {
             setTimeout(() => {
                 setLoggedIn(false);
             }, 2000);
-        } else if (result == 404) {
+        } else if (result == 401) {
             setError('Credenciales incorrectas. Inténtalo de nuevo.')
+        }else if (result==404){
+            setError('Usuario no registrado')
         }else{
-            setError('Error en el servidor, comuniquese con el administrador')
+            setError('Error en el servidor,intente mas tarde')
         }
     }
 
@@ -71,15 +73,22 @@ const Login = () => {
                 {loggedIn && <div className="alert alert-success mt-3" role="alert">
                     Sesión iniciada con éxito
                 </div>}
+                
             </form>
 
             {error && <div className="alert alert-danger w-50 align-self-center lign-bottom" role="alert">{error}</div>}
 
-            <div className="w-50 d-flex justify-content-between align-self-center">
-                <Link to="/">
-                    <button className="btn btn-dark">Regresar</button>
-                </Link>
-                <p >No tienes cuenta? <Link className="text-decoration-underline" to="/register">Registrate</Link></p>
+            <div className="w-50 d-flex justify-content-between align-items-center align-self-center">
+    
+                    <Link className="ps-1" to="/">
+                        <button className="btn btn-dark">Regresar</button>
+                    </Link>
+                    <Link className="pe-1" to="/reset_password">
+                        <button className="btn boton1">Olvide mi contraseña</button>
+                    </Link>
+            </div>
+            <div className="w-50 d-flex justify-content-center align-self-center mt-4">
+                    <p>No tienes cuenta? <Link to="/register">Registrate</Link></p>
             </div>
             
         </div>
