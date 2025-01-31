@@ -32,6 +32,7 @@ export const Admin = () => {
 
     const fetchUsers = async () => {
         try {
+            setLoading(true); // Empieza la carga
             const response = await fetch(process.env.BACKEND_URL + "/getUsers", {
                 method: "GET",
                 headers: {
@@ -41,18 +42,25 @@ export const Admin = () => {
             const data = await response.json();
 
             if (response.ok) {
-                setUsers(data.users);
+                // Suponemos que todos los usuarios vienen activos por defecto
+                const usersWithDefaults = data.users.map(user => ({
+                    ...user,
+                    is_active: user.is_active ?? true // Asumimos que es activo si is_active es undefined
+                }));
+                setUsers(usersWithDefaults);
             } else {
                 setError(data.error || 'Error al obtener los usuarios');
             }
         } catch (error) {
             setError('Error al conectar con el servidor');
             console.error(error);
+        } finally {
+            setLoading(false); // Termina la carga
         }
     };
 
     useEffect(() => {
-        fetchUsers(); 
+        fetchUsers();
     }, []);
 
     const toggleUserActivation = async (userId, isActive) => {
@@ -173,9 +181,11 @@ export const Admin = () => {
                             ) : (
                                 <ul>
                                     {users && users.map((user, index) => (
-                                        <li key={index}>
-                                            <p className=" fs-6">id: {user.id} Nombre: {user.firstName} {user.lastName} Correo: {user.email} </p>
-                                            <div className="container pb-3">
+                                        <li key={index} className="d-flex justify-content-between align-items-center">
+                                            <div className="container">
+                                                <p className="fs-6">id: {user.id}, {user.firstName} {user.lastName}</p>
+                                            </div>
+                                            <div className="container d-flex justify-content-end mb-2 ">
                                                 <button
                                                     className={`btn ${user.is_active ? 'btn-danger' : 'btn-success'}`}
                                                     onClick={() => toggleUserActivation(user.id, user.is_active)}
@@ -183,7 +193,7 @@ export const Admin = () => {
                                                     {user.is_active ? 'Desactivar' : 'Activar'}
                                                 </button>
                                                 <button
-                                                    className="btn btn-info ms-2"
+                                                    className="btn btn-secondary ms-2"
                                                     onClick={() => showUserDetails(user)}
                                                 >
                                                     Ver Info
@@ -210,7 +220,9 @@ export const Admin = () => {
                                         <p><strong>Nombre:</strong> {selectedUser.firstName} {selectedUser.lastName}</p>
                                         <p><strong>Correo:</strong> {selectedUser.email}</p>
                                         <p><strong>Cumpleaños:</strong> {!selectedUser.birthDate ? "No cargado" : selectedUser.birthDate}</p>
-                                        {/* Añade más campos según sea necesario */}
+                                        <p><strong>Username:</strong> {!selectedUser.username ? "No cargado" : selectedUser.username}</p>
+                                        <p><strong>Rol:</strong> {selectedUser.rol}</p>
+                                        <p><strong>Fecha de Creación:</strong> {selectedUser.salt}</p>
                                     </div>
                                     <div className="modal-footer">
                                         <button type="button" className="btn btn-secondary" onClick={closeModal}>Cerrar</button>
