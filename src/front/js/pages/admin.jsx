@@ -13,6 +13,8 @@ export const Admin = () => {
     });
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -50,9 +52,39 @@ export const Admin = () => {
     };
 
     useEffect(() => {
-        fetchUsers(); // Llamada a fetchUsers al montar el componente
+        fetchUsers(); 
     }, []);
 
+    const toggleUserActivation = async (userId, isActive) => {
+        try {
+            const endpoint = isActive ? 'deactivateUser' : 'activateUser';
+            const response = await fetch(`${process.env.BACKEND_URL}/${endpoint}/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    "Authorization": `Bearer ${store.token}`
+                }
+            });
+            if (response.ok) {
+                setUsers(prevUsers =>
+                    prevUsers.map(user =>
+                        user.id === userId ? { ...user, is_active: !isActive } : user
+                    )
+                );
+            } else {
+                console.error(`Error ${isActive ? 'desactivando' : 'activando'} usuario`);
+            }
+        } catch (error) {
+            console.error(`Error ${isActive ? 'desactivando' : 'activando'} usuario`, error);
+        }
+    };
+
+    const showUserDetails = (user) => {
+        setSelectedUser(user);
+    }
+
+    const closeModal = () => {
+        setSelectedUser(null);
+    }
     return (
         <>
             <div className="container d-flex justify-content-center mt-5">
@@ -61,7 +93,7 @@ export const Admin = () => {
                     role="tablist"
                 >
                     <li className="nav-item" role="presentation">
-                        <button className="nav-link active"
+                        <button className="nav-link active bg-dark text-light me-2"
                             id="pills-home-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-home"
@@ -73,7 +105,7 @@ export const Admin = () => {
                         </button>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <button className="nav-link"
+                        <button className="nav-link bg-dark text-light me-2"
                             id="pills-usuarios-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-usuarios"
@@ -85,7 +117,7 @@ export const Admin = () => {
                         </button>
                     </li>
                     <li className="nav-item" role="presentation">
-                        <button className="nav-link"
+                        <button className="nav-link bg-dark text-light"
                             id="pills-ejercicios-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#pills-ejercicios"
@@ -105,25 +137,23 @@ export const Admin = () => {
                     aria-labelledby="pills-home-tab"
                 >
                     <div className="container d-flex justify-content-center mt-5 ">
-                        
-                            
-                                <div className="border border-3 rounded-3 p-5">
-                                    <div className="d-flex justify-content-between align-items-center">
-                                        <h3 className="me-5">Detalles de administrador</h3>
-                                        <Link to="/edit_profile">
-                                            Editar Información
-                                        </Link>
-                                    </div>
-                                    <p className="fs-5 fw-bolder data-text">Correo</p>
-                                    <p className="fs-6">{store.currentUser['email']}</p>
-                                    <p className="fs-5 fw-bolder data-text">Nombre</p>
-                                    <p className="fs-6">{store.currentUser['firstName']} {store.currentUser['lastName']}</p>
-                                    <p className="fs-5 fw-bolder data-text">Cumpleaños</p>
-                                    <p className="fs-6">{!store.currentUser['birthDate'] ? "No cargado" : store.currentUser['birthDate']}</p>
-                                </div>
-                            
+                        <div className="border border-3 rounded-3 p-5">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h3 className="me-5">Detalles de administrador</h3>
+                                <Link to="/edit_profile">
+                                    Editar Información
+                                </Link>
+                            </div>
+                            <p className="fs-5 fw-bolder data-text">Correo</p>
+                            <p className="fs-6">{store.currentUser['email']}</p>
+                            <p className="fs-5 fw-bolder data-text">Nombre</p>
+                            <p className="fs-6">{store.currentUser['firstName']} {store.currentUser['lastName']}</p>
+                            <p className="fs-5 fw-bolder data-text">Cumpleaños</p>
+                            <p className="fs-6">{!store.currentUser['birthDate'] ? "No cargado" : store.currentUser['birthDate']}</p>
+                        </div>
 
-                        
+
+
                     </div>
                 </div>
                 <div className="tab-pane fade"
@@ -132,31 +162,72 @@ export const Admin = () => {
                     aria-labelledby="pills-usuarios-tab"
                 >
                     <div className="container pb-5">
-
                         <div className="border border-3 rounded-3 p-5">
                             <div className="d-flex justify-content-between align-items-center">
                                 <h3>Usuarios</h3>
                             </div>
-                            {error ? (
+                            {loading ? (
+                                <p>Cargando usuarios...</p>
+                            ) : error ? (
                                 <p className="text-danger">{error}</p>
                             ) : (
                                 <ul>
                                     {users && users.map((user, index) => (
                                         <li key={index}>
-                                            <p className="fs-6">id: {user.id} Nombre: {user.firstName} {user.lastName} Correo: {user.email} </p>
-
-
+                                            <p className=" fs-6">id: {user.id} Nombre: {user.firstName} {user.lastName} Correo: {user.email} </p>
+                                            <div className="container pb-3">
+                                                <button
+                                                    className={`btn ${user.is_active ? 'btn-danger' : 'btn-success'}`}
+                                                    onClick={() => toggleUserActivation(user.id, user.is_active)}
+                                                >
+                                                    {user.is_active ? 'Desactivar' : 'Activar'}
+                                                </button>
+                                                <button
+                                                    className="btn btn-info ms-2"
+                                                    onClick={() => showUserDetails(user)}
+                                                >
+                                                    Ver Info
+                                                </button>
+                                            </div>
                                         </li>
                                     ))}
                                 </ul>
                             )}
                         </div>
-
                     </div>
+                    {selectedUser && (
+                        <div className="modal show d-block" tabIndex="-1" role="dialog">
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title">Detalles del Usuario</h5>
+                                        <button type="button" className="close" onClick={closeModal}>
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <p><strong>ID:</strong> {selectedUser.id}</p>
+                                        <p><strong>Nombre:</strong> {selectedUser.firstName} {selectedUser.lastName}</p>
+                                        <p><strong>Correo:</strong> {selectedUser.email}</p>
+                                        <p><strong>Cumpleaños:</strong> {!selectedUser.birthDate ? "No cargado" : selectedUser.birthDate}</p>
+                                        {/* Añade más campos según sea necesario */}
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" onClick={closeModal}>Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                 </div>
 
-                <div className="tab-pane fade" id="pills-ejercicios" role="tabpanel" aria-labelledby="pills-ejercicios-tab">
-                    <div className="col-12 col-md-6">
+                <div className="tab-pane fade"
+                    id="pills-ejercicios"
+                    role="tabpanel"
+                    aria-labelledby="pills-ejercicios-tab"
+                >
+                    <div className="container">
                         <div className="data border border-3 rounded-3 p-5">
                             <div className="d-flex justify-content-between align-items-center">
                                 <h3>Agregar Ejercicio</h3>
