@@ -15,6 +15,18 @@ class Status(Enum):
     approved="approved"
     none="none"
 
+class MuscleGroup(Enum):
+    biceps="biceps"
+    triceps="triceps"
+    quadriceps="cuadriceps"
+    back="espalda"
+    femoral="femoral"
+    chest="pecho"
+    shoulder="hombro"
+    forearm="antebrazo"
+    calf="pantorrilla"
+    gluteus="gluteo"
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstName = db.Column(db.String(40), nullable=False)
@@ -68,10 +80,10 @@ class User(db.Model):
             "lastName":self.lastName,
             "username":self.username,
             "birthDate":self.birthDate,
+            "rol":self.rol.value,
             "measures":measures_data,
             "social":social_data,
             "request":status_data
-
             # do not serialize the password, its a security breach
         }
     
@@ -133,6 +145,23 @@ class Request(db.Model):
         return{
             "status":self.status.value
         }
+    
+class Exercise(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    url = db.Column(db.String(200),unique=True,nullable=False)
+    name = db.Column(db.String(50),nullable=False)
+    description= db.Column(db.String(100))
+    muscle_group = db.Column(db.Enum(MuscleGroup),nullable=False)
+
+    def serialize(self):
+        return{
+            "id":self.id,
+            "name":self.name,
+            "url":self.url,
+            "description":self.description,
+            "muscle_group":self.muscle_group.value
+        }
+
 
 
 

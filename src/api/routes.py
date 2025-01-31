@@ -2,18 +2,22 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User,Measures,Social,Request
-from api.utils import generate_sitemap, APIException
+from api.models import db, User,Measures,Social,Request,Exercise
+from api.utils import generate_sitemap, APIException,sendEmail
 from flask_cors import CORS
 import os
 from base64 import b64encode
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import timedelta
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
+
+expire_in_minute = 10
+expire_delta = timedelta(minutes=expire_in_minute)
 
 
 @api.route('/register', methods=['POST'])
@@ -131,13 +135,42 @@ def saveMeasures():
             db.session.add(measure)
             try:
                 db.session.commit()
-                return jsonify("Guardado"),201     
+                return jsonify("Guardado"),200     
             except Exception as err:
                 return jsonify({'error': str(err)}),500
     
     except Exception as err:
         return jsonify({'error': str(err)}),500
     
+@api.route('/updateMeasures', methods=['PUT'])
+@jwt_required()
+def updateMeasures():
+    try:
+        body = request.json
+        weight = body.get('weight')
+        height = body.get('height')
+        biceps = body.get('biceps')
+        waist = body.get('waist')
+        user_id = get_jwt_identity()
+
+        if weight is None or height is None or biceps is None or waist is None:
+            return jsonify('No se pueden guardar campos vacios'), 400
+        else:
+            measure = Measures.query.filter_by(user_id=user_id).first()
+            measure.weight = weight
+            measure.height = height
+            measure.biceps = biceps
+            measure.waist = waist
+            measure.user_id = user_id
+            try:
+                db.session.commit()
+                return jsonify("Editado"),200    
+            except Exception as err:
+                return jsonify({'error': str(err)}),500
+    
+    except Exception as err:
+        return jsonify({'error': str(err)}),500
+
 @api.route('/getUser', methods=['GET'])
 @jwt_required()
 def getUser():
@@ -154,8 +187,8 @@ def getUser():
 def saveSocial():
     try:
         body = request.json
-        instagram = body.get('ig')
-        facebook = body.get('face')
+        instagram = body.get('instagram')
+        facebook = body.get('facebook')
         twitter = body.get('twitter')
         user_id = get_jwt_identity()
 
@@ -168,6 +201,33 @@ def saveSocial():
             social.twitter=twitter
             social.user_id=user_id
             db.session.add(social)
+            
+            try:
+                db.session.commit()
+                return jsonify('Guardado exitosamente'),200
+            except Exception as error:
+                return jsonify({'error': str(error)}),500
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
+    
+@api.route('/updateSocial', methods=['PUT'])
+@jwt_required()
+def updateSocial():
+    try:
+        body = request.json
+        instagram = body.get('instagram')
+        facebook = body.get('facebook')
+        twitter = body.get('twitter')
+        user_id = get_jwt_identity()
+
+        if instagram is None and facebook is None and twitter is None:
+            return jsonify("No pueden estar todos los campos vacios")
+        else:
+            social = Social.query.filter_by(user_id=user_id).first()
+            social.instagram=instagram
+            social.facebook=facebook
+            social.twitter=twitter
+            social.user_id=user_id
             
             try:
                 db.session.commit()
@@ -266,3 +326,88 @@ def deactivateUser(user_id):
         return jsonify({"message": "Usuario desactivado"}), 200
     except Exception as error:
         return jsonify({'error': str(error)}), 500
+@api.route("/saveExercise", methods=['POST'])
+@jwt_required()
+def saveExercise():
+    try:
+        body = request.json
+        url = body.get('url')
+        name = body.get('name')
+        description = body.get('description')
+        muscle_group = body.get('muscle_group')
+
+        if url is None or name is None or description is None or muscle_group is None:
+            return jsonify('Todos los campos son obligatorios')
+        else:
+            exercise = Exercise()
+            exercise.url = url
+            exercise.name=name
+            exercise.description=description
+            exercise.muscle_group=muscle_group
+            db.session.add(exercise)
+            try:
+                db.session.commit()
+                return jsonify('Guardado con exito'),200
+            except Exception as error:
+                return jsonify({'error': str(error)}) 
+    except Exception as error:
+       return jsonify({'error': str(error)})
+
+@api.route('/getExercisesGroup', methods=['GET'])
+def getExercise():
+    try:
+        body=request.json
+        muscle_group = body.get('muscle_group')
+
+        if muscle_group is None:
+            return jsonify('Necesitamos que especifiques el grupo muscular')
+        else:
+            exercises = Exercise.query.filter_by(muscle_group=muscle_group).all()
+            return jsonify({"excercises":[exercise.serialize() for exercise in exercises]}),200
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
+
+@api.route('/reset_password', methods=["POST"])
+def reset_password():
+    try:
+        body = request.json
+        email = body.get('email')
+
+        user = User.query.filter_by(email=email).first()
+        if user is None:
+            return jsonify('Este email no existe'),404
+        else:
+            recovery_token = create_access_token(identity=str(email), expires_delta=expire_delta)
+            message = f"""
+                        <h1>Se solicito recuperar la contraseña</h1>
+                        <br></br>
+                        <h3>Mediante este link puedes recuperar la contraseña</h3>
+                        <a href="https://curly-bassoon-g459j44vxp4p2wxvp-3000.app.github.dev/update_password?token={recovery_token}">LINK PARA RECUPERAR CONTRASEÑA</a>
+                    """
+            sendEmail("Privado",body.get('email'),message)  
+        return jsonify("Enviado exitosamente"),200
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
+    
+@api.route('/update_password', methods=['PUT'])
+@jwt_required()
+def updatePassword():
+    try:
+        email = get_jwt_identity()
+        body = request.json
+        password = body.get('password1')
+        user = User.query.filter_by(email=email).first()
+
+        salt = b64encode(os.urandom(32)).decode('utf-8')
+        password = generate_password_hash(f'{password}{salt}')
+
+        user.salt = salt
+        user.password = password 
+        try:
+            db.session.commit()
+            return jsonify('Clave Actualizada'),200
+        except Exception as error:
+            return jsonify({'error': str(error)}),500
+
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
