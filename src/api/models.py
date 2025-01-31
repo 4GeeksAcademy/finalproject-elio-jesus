@@ -38,7 +38,7 @@ class User(db.Model):
     salt = db.Column(db.String(180))
     rol = db.Column(db.Enum(Rol), default="general")
     avatar = db.Column(db.String(180))
-    is_active = db.Column(db.Boolean(), nullable=False, default=False)
+    is_active = db.Column(db.Boolean(), nullable=False, default=True)
     create_at = db.Column(db.DateTime(timezone=True), default=db.func.now(), nullable=False)
     update_at = db.Column(db.DateTime(timezone=True), default=db.func.now(),onupdate=db.func.now(), nullable=False)
 

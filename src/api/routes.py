@@ -292,6 +292,40 @@ def updateStatus():
     except Exception as error:
        return jsonify({'error': str(error)})
     
+@api.route('/getUsers', methods=['GET'])
+@jwt_required()
+def getUsers():
+    try:
+        users = User.query.all()
+        return jsonify({"users": [user.serialize() for user in users]}), 200
+    except Exception as error:
+        return jsonify({'error': str(error)}), 500
+
+@api.route('/activateUser/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def activateUser(user_id):
+    try:
+        user = User.query.get(user_id)
+        if user is None:
+            return jsonify({"message": "Usuario no encontrado"}), 404
+        user.is_active = True  
+        db.session.commit()
+        return jsonify({"message": "Usuario activado"}), 200
+    except Exception as error:
+        return jsonify({'error': str(error)}), 500
+
+@api.route('/deactivateUser/<int:user_id>', methods=['PUT'])
+@jwt_required()
+def deactivateUser(user_id):
+    try:
+        user = User.query.get(user_id)
+        if user is None:
+            return jsonify({"message": "Usuario no encontrado"}), 404
+        user.is_active = False 
+        db.session.commit()
+        return jsonify({"message": "Usuario desactivado"}), 200
+    except Exception as error:
+        return jsonify({'error': str(error)}), 500
 @api.route("/saveExercise", methods=['POST'])
 @jwt_required()
 def saveExercise():
