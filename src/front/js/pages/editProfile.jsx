@@ -18,7 +18,14 @@ const EditProfile = () => {
 
     const edit = async (event,contact) => {
         event.preventDefault()
-        const editado = await actions.updateContact(contact)
+        const formData = new FormData()
+        formData.append("firstName",contact.firstName)
+        formData.append("lastName",contact.lastName)
+        formData.append("username",contact.username)
+        formData.append("birthDate",contact.birthDate)
+        formData.append("avatar",contact.avatar)
+
+        const editado = await actions.updateContact(formData)
         if (editado == 200) {
             setEdited(true)
             navigate("/profile")
@@ -85,9 +92,10 @@ const EditProfile = () => {
                                type="file"
                                className="form-control"
                                name="avatar"
-                               value={contact?.avatar || ""}
                                id="inputAvatar"
-                               onChange={handleChange}
+                               onChange={(event)=>{
+                                    setContact({...contact,avatar:event.target.files[0]})//pregunta
+                               }}
                            />
                 </div>
 

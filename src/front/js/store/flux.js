@@ -52,6 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+
             //cerrar sesion
             close: () => {
                 setStore({
@@ -68,10 +69,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     const response = await fetch(process.env.BACKEND_URL + "/updateContact", {
                         method: "PUT",
                         headers: {
-                            "Authorization": `Bearer ${getStore().token}`,
-                            "Content-Type": "application/json"
+                            "Authorization": `Bearer ${getStore().token}`
                         },
-                        body: JSON.stringify(contact)
+                        body:contact
                     })
 
                     if (response.ok) {
@@ -146,43 +146,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            //obtener user
-            // getUser: async () => {
-            //     try {
-            //         const response = await fetch(process.env.BACKEND_URL + "/getUser", {
-            //             method: "GET",
-            //             headers: {
-            //                 "Authorization": `Bearer ${getStore().token}`,
-            //             }
-            //             return (response.status);
-
-            //         } catch (error) {
-            //             return (error);
-            //         }
-            //     },
-
-            // obtener usuarios
-            // getUsers: async () => {
-            //     try {
-            //         const response = await fetch(process.env.BACKEND_URL + "/getUsers", {
-            //             method: "GET",
-            //             headers: {
-            //                 "Authorization": `Bearer ${getStore().token}`
-            //             }
-            //         });
-            //         const data = await response.json();
-
-            //         if (response.ok) {
-            //             setStore({ users: data.users });
-            //         }
-            //         return (response.status);
-
-            //     } catch (error) {
-            //         return (error);
-            //     }
-            // },
-
-
 
             //guardar social
             saveSocial: async (social) => {
@@ -224,27 +187,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // getStatus: async () => {
-            //     try {
-            //         const response = await fetch(process.env.BACKEND_URL + "/getStatus", {
-            //             method: "GET",
-            //             headers: {
-            //                 "Authorization": `Bearer ${getStore().token}`,
-            //             }
-            //         })
-            //         const data = await response.json()
-
-            //         if (response.ok) {
-            //             return (data, response.status)
-
-            //         }
-
-            //     } catch (error) {
-            //         return (error)
-            //     }
-
-            // },
-
             updateStatus: async (status) => {
                 try {
                     const response = await fetch(process.env.BACKEND_URL + "/updateStatus", {
@@ -274,9 +216,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(exercise)
                     });
-                    if (response.ok) {
-                        getActions().getUser();
-                    }
                     return response.status;
                 } catch (error) {
                     return error;

@@ -10,6 +10,7 @@ from base64 import b64encode
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import timedelta
+import cloudinary.uploader as uploader 
 
 api = Blueprint('api', __name__)
 
@@ -87,27 +88,39 @@ def login():
     except Exception as err:
         return jsonify({'error': str(err)}),500
 
+
+
 @api.route('/updateContact', methods=["PUT"])
 @jwt_required()
 def updateContact():
     try:
-        body = request.json
-        firstName = body.get('firstName')
-        lastName = body.get('lastName')
-        username = body.get('username')
-        birthDate = body.get('birthDate')
+        body_form = request.form
+        body_files = request.files
+        firstName = body_form.get('firstName')
+        lastName = body_form.get('lastName')
+        username = body_form.get('username')
+        birthDate = body_form.get('birthDate')
+        avatar = body_files.get('avatar')
         user_id = get_jwt_identity()
 
         if firstName is None or lastName is None or username is None:
             return jsonify('No pueden quedar campos vacios'), 400
         else:
+            avatar = uploader.upload(avatar)
+            avatar = avatar.get('secure_url')
+
             user = User.query.filter_by(id=user_id).first()
             user.firstName = firstName
             user.lastName = lastName
             user.username = username
             user.birthDate = birthDate
-            db.session.commit()
-            return jsonify({"currentUser":user.serialize()}),200
+            user.avatar = avatar
+            
+            try:
+                db.session.commit()
+                return jsonify({"currentUser":user.serialize()}),200
+            except Exception as error:
+                return jsonify({'error': str(error)}),500
             
     except Exception as error:
         return jsonify({'error': str(error)}),500
@@ -326,6 +339,7 @@ def deactivateUser(user_id):
         return jsonify({"message": "Usuario desactivado"}), 200
     except Exception as error:
         return jsonify({'error': str(error)}), 500
+
 @api.route("/saveExercise", methods=['POST'])
 @jwt_required()
 def saveExercise():

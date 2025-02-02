@@ -13,10 +13,10 @@ export const Navbar = () => {
 				</Link>
 				<div className="d-flex ">
 						<div className="navbar-nav d-flex flex-row">
-							<a className="nav-link active pe-3" aria-current="page" href="/">Inicio</a>
-							<a className="nav-link active pe-3" href="#">Ejercicios</a>
-							<a className="nav-link active pe-3" href="#">Servicios</a>
-							<a className="nav-link active pe-5" href="#">Nosotros</a>
+							<Link className="linea" to="/"><a className="nav-link active pe-3" >Inicio</a></Link>
+							<Link className="linea" to="/exercises"><a className="nav-link active pe-3">Ejercicios</a></Link>
+							<Link className="linea" to="/"><a className="nav-link active pe-3">Servicios</a></Link>
+							<Link className="linea" to="/"><a className="nav-link active pe-5">Nosotros</a></Link>
 							
 						</div>
 					{!store.token ?
