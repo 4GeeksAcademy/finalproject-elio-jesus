@@ -122,7 +122,11 @@ const Profile = () => {
                             <h1 className="text ps-5">{horas > 12 ? "Buenas tardes" : "Buenos dias"} {store.currentUser['firstName']}</h1>
                         </div>
                         <div className="col-12 col-md-5 text-end">
-                            <img className="imagen img-thumbnail justify-content-center" src="https://i.pravatar.cc/300" alt="fotoperfil" />
+                            <img 
+                                className="imagen img-thumbnail justify-content-center" 
+                                src={!store.currentUser['avatar']? `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png`:store.currentUser['avatar']} 
+                                alt="fotoperfil"
+                            />
                         </div>
                     </div>
                 </div>

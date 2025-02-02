@@ -81,6 +81,7 @@ class User(db.Model):
             "username":self.username,
             "birthDate":self.birthDate,
             "rol":self.rol.value,
+            "avatar":self.avatar,
             "measures":measures_data,
             "social":social_data,
             "request":status_data

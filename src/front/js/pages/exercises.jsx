@@ -48,7 +48,7 @@ const Exercises = () => {
 
     return (
         <div className="ejercicios-container ">
-            <h1>Ejercicios</h1>
+            <h1 className="text-center titulo mt-3 mb-5">Ejercicios por grupos musculares</h1>
             <div className="ejercicios-list">
                 {exercises.map(exercises => (
                     <div className="ejercicio-card" key={exercises.id}>

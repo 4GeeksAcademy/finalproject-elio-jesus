@@ -6,15 +6,17 @@ import "../../styles/admin.css";
 export const Admin = () => {
     const { store, actions } = useContext(Context);
     const [newExercise, setNewExercise] = useState({
-        nombre: '',
-        descripcion: '',
-        video: '',
-        categoria: ''
+        name: '',
+        description: '',
+        url: '',
+        muscle_group: ''
     });
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [send,setSend] = useState(false)
     const [selectedUser, setSelectedUser] = useState(null);
+    const navigate = useNavigate()
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,10 +26,22 @@ export const Admin = () => {
         }));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        actions.addExercise(newExercise);
-        setNewExercise({ nombre: '', descripcion: '', video: '', categoria: '' });
+        if (!newExercise.name || !newExercise.description || !newExercise.url || !newExercise.muscle_group ){
+            setError('Todos los campos son obligatorios')
+        }else{
+            const response = await actions.addExercise(newExercise);
+            if(response==200){
+                setSend(true)
+                setNewExercise({ name: '', description: '', url: '', muscle_group: '' });
+                setTimeout(() => {
+                    setSend(false);
+                }, 2000);
+            }else{
+                setError('Error')
+            }
+        }
     }
 
     const fetchUsers = async () => {
@@ -63,6 +77,8 @@ export const Admin = () => {
         fetchUsers();
     }, []);
 
+    
+
     const toggleUserActivation = async (userId, isActive) => {
         try {
             const endpoint = isActive ? 'deactivateUser' : 'activateUser';
@@ -93,6 +109,8 @@ export const Admin = () => {
     const closeModal = () => {
         setSelectedUser(null);
     }
+
+    useEffect(()=>{store.currentUser["rol"]!="admin"? navigate('/'):null},[])
     return (
         <>
             <div className="container d-flex justify-content-center mt-5">
@@ -250,8 +268,8 @@ export const Admin = () => {
                                     <input
                                         type="text"
                                         className="form-control"
-                                        name="nombre"
-                                        value={newExercise.nombre}
+                                        name="name"
+                                        value={newExercise.name}
                                         onChange={handleChange}
                                         required
                                     />
@@ -260,8 +278,8 @@ export const Admin = () => {
                                     <label className="form-label fs-5 fw-bolder data-text">Descripción</label>
                                     <textarea
                                         className="form-control"
-                                        name="descripcion"
-                                        value={newExercise.descripcion}
+                                        name="description"
+                                        value={newExercise.description}
                                         onChange={handleChange}
                                         required
                                     />
@@ -271,8 +289,8 @@ export const Admin = () => {
                                     <input
                                         type="url"
                                         className="form-control"
-                                        name="video"
-                                        value={newExercise.video}
+                                        name="url"
+                                        value={newExercise.url}
                                         onChange={handleChange}
                                         required
                                     />
@@ -281,8 +299,8 @@ export const Admin = () => {
                                     <label className="form-label fs-5 fw-bolder data-text">Categoría</label>
                                     <select
                                         className="form-select"
-                                        name="categoria"
-                                        value={newExercise.categoria}
+                                        name="muscle_group"
+                                        value={newExercise.muscle_group}
                                         onChange={handleChange}
                                         required
                                     >
@@ -303,6 +321,10 @@ export const Admin = () => {
                                 <button type="submit" className="btn btn-primary">Agregar Ejercicio</button>
                             </form>
                         </div>
+                        {send && <div className="alert alert-success mt-3" role="alert">
+                            Guardado con exito
+                        </div>}
+                        {error && <div className="alert alert-danger w-50 align-self-center lign-bottom" role="alert">{error}</div>}
                     </div>
                 </div>
             </div>
