@@ -335,6 +335,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     return (error)
                 }
+            },
+
+            getExercisesGroup: async (muscle_group) =>{
+                try{
+                    const response = await fetch(process.env.BACKEND_URL+"/getExercisesGroup",{
+                        method:"GET",
+                        headers:{
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        },
+                        body:JSON.stringify(muscle_group)
+                    })
+                    const data = await response.json()
+                    if(response.ok){
+                        return(data)
+                    }
+                    return (response.status)
+                }catch{
+                    return(error)
+                }
             }
         }
     };

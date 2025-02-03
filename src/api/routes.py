@@ -368,6 +368,7 @@ def saveExercise():
        return jsonify({'error': str(error)})
 
 @api.route('/getExercisesGroup', methods=['GET'])
+@jwt_required()
 def getExercise():
     try:
         body=request.json
