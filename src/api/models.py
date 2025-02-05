@@ -163,6 +163,3 @@ class Exercise(db.Model):
             "muscle_group":self.muscle_group.value
         }
 
-
-
-
