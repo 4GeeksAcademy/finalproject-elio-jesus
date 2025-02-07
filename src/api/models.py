@@ -4,9 +4,9 @@ db = SQLAlchemy()
 
 class Rol(Enum):
     general="general"
-    entrenador="trainer"
-    nutricionista="nutritionist"
-    fisioterapeuta="physiotherapist"
+    entrenador="entrenaodr"
+    nutricionista="nutricionista"
+    fisioterapeuta="fisioterapeuta"
     admin="admin"
 
 class Status(Enum):
@@ -88,6 +88,13 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
     
+    def serialize_two(self):
+        return{
+            "id":self.id,
+            "request":self.request.serialize()
+        }
+
+    
 class Measures(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     weight=db.Column(db.Float)
@@ -139,7 +146,9 @@ class Request(db.Model):
             "telephone":self.telephone,
             "linkedin":self.linkedin,
             "profession":self.profession,
-            "status":self.status.value
+            "status":self.status.value,
+            "user_id":self.user_id
+            # "user":self.user.serialize()
         }
     
     def serialize_status(self):

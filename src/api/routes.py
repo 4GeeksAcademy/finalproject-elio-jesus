@@ -195,6 +195,28 @@ def getUser():
     except Exception as error:
         return jsonify({'error': str(error)})
     
+@api.route('/getUser2', methods=['POST'])
+@jwt_required()
+def getUser2():
+    try:
+        body = request.json
+        user_id = body
+        user = User.query.filter_by(id=user_id).first()
+        return jsonify({"currentUser":user.serialize()}),200
+
+    except Exception as error:
+        return jsonify({'error': str(error)})
+
+@api.route('/getUsersForRol', methods=['GET'])
+def getUsersForRol():
+    try:
+        body = request.json
+        rol = body.get('rol')
+        users = User.query.filter_by(rol=rol).all()
+        return jsonify({"users":[user.serialize() for user in users]})
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
+    
 @api.route('/saveSocial', methods=['POST'])
 @jwt_required()
 def saveSocial():
@@ -295,10 +317,11 @@ def saveRequest():
 def updateStatus():
     try:
         body = request.json
+        id = body.get('id')
         status = body.get('status')
-        user_id = get_jwt_identity()
 
-        peticion = Request.query.filter_by(user_id=user_id).first()
+
+        peticion = Request.query.filter_by(id=id).first()
         peticion.status = status
         db.session.commit()
         return jsonify("Editado el estatus"),200
@@ -351,7 +374,7 @@ def saveExercise():
         muscle_group = body.get('muscle_group')
 
         if url is None or name is None or description is None or muscle_group is None:
-            return jsonify('Todos los campos son obligatorios')
+            return jsonify('Todos los campos son obligatorios'),400
         else:
             exercise = Exercise()
             exercise.url = url
@@ -363,9 +386,9 @@ def saveExercise():
                 db.session.commit()
                 return jsonify('Guardado con exito'),200
             except Exception as error:
-                return jsonify({'error': str(error)}) 
+                return jsonify({'error': str(error)}),500
     except Exception as error:
-       return jsonify({'error': str(error)})
+       return jsonify({'error': str(error)}),500
 
 @api.route('/getExercisesGroup', methods=['GET'])
 @jwt_required()
@@ -424,5 +447,34 @@ def updatePassword():
         except Exception as error:
             return jsonify({'error': str(error)}),500
 
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
+    
+@api.route('/getAlluserRequest', methods=["GET"])
+@jwt_required()
+def getAlluserRequest():
+    try:
+        solicitudes = Request.query.all()
+        # user = User.query.all()
+        return jsonify({"solicitudes":[solicitud.serialize() for solicitud in solicitudes]})
+        # print(user)
+        # return jsonify({"solicitudes":[user.serialize() for user in user]})
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
+
+@api.route('/updateRol', methods=['PUT'])
+@jwt_required()
+def updateRol():
+    try:
+        rol = request.json
+        user_id = get_jwt_identity()
+        
+        if rol is None:
+            return jsonify("Se necesita un rol"),400
+        else:
+            user = User.query.filter_by(id=user_id).first()
+            user.rol = rol
+            db.session.commit()
+            return jsonify("Rol actualizado"),200
     except Exception as error:
         return jsonify({'error': str(error)}),500
