@@ -26,6 +26,7 @@ class MuscleGroup(Enum):
     forearm="antebrazo"
     calf="pantorrilla"
     gluteus="gluteo"
+    abdominal="abdominal"
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

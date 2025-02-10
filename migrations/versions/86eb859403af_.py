@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e70f64f0ebc0
+Revision ID: 86eb859403af
 Revises: 
-Create Date: 2025-02-05 18:38:28.320542
+Create Date: 2025-02-10 19:00:25.588112
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e70f64f0ebc0'
+revision = '86eb859403af'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('url', sa.String(length=200), nullable=False),
     sa.Column('name', sa.String(length=50), nullable=False),
     sa.Column('description', sa.String(length=100), nullable=True),
-    sa.Column('muscle_group', sa.Enum('biceps', 'triceps', 'quadriceps', 'back', 'femoral', 'chest', 'shoulder', 'forearm', 'calf', 'gluteus', name='musclegroup'), nullable=False),
+    sa.Column('muscle_group', sa.Enum('biceps', 'triceps', 'quadriceps', 'back', 'femoral', 'chest', 'shoulder', 'forearm', 'calf', 'gluteus', 'abdominal', name='musclegroup'), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('url')
     )
