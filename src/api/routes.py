@@ -300,18 +300,7 @@ def saveRequest():
             
     except Exception as error:
         return jsonify({'error': str(error)}),500
-    
-# @api.route('/getStatus', methods=['GET'])
-# @jwt_required()
-# def getStatus():
-#     try:
-#         user_id = get_jwt_identity()
-#         status = Request.query.filter_by(user_id=user_id).first()
-#         return jsonify({"status":status.serialize_status()}),200
-
-#     except Exception as error:
-#         return jsonify({'error': str(error)})
-    
+ 
 @api.route("/updateStatus",methods=['PUT'])
 @jwt_required()
 def updateStatus():
@@ -374,36 +363,31 @@ def saveExercise():
         muscle_group = body.get('muscle_group')
 
         if url is None or name is None or description is None or muscle_group is None:
-            return jsonify('Todos los campos son obligatorios'),400
+            return jsonify('Todos los campos son obligatorios'), 400
         else:
-            exercise = Exercise()
-            exercise.url = url
-            exercise.name=name
-            exercise.description=description
-            exercise.muscle_group=muscle_group
+            exercise = Exercise(
+                url=url,
+                name=name,
+                description=description,
+                muscle_group=muscle_group
+            )
             db.session.add(exercise)
-            try:
-                db.session.commit()
-                return jsonify('Guardado con exito'),200
-            except Exception as error:
-                return jsonify({'error': str(error)}),500
+            db.session.commit()
+            return jsonify('Guardado con exito'), 200
     except Exception as error:
-       return jsonify({'error': str(error)}),500
+        return jsonify({'error': str(error)}), 500
 
-@api.route('/getExercisesGroup', methods=['GET'])
+@api.route('/getExercisesGroup/<muscle_group>', methods=['GET'])
 @jwt_required()
-def getExercise():
+def getExercise(muscle_group):
     try:
-        body=request.json
-        muscle_group = body.get('muscle_group')
-
-        if muscle_group is None:
-            return jsonify('Necesitamos que especifiques el grupo muscular')
+        if not muscle_group:
+            return jsonify('Necesitamos que especifiques el grupo muscular'), 400
         else:
             exercises = Exercise.query.filter_by(muscle_group=muscle_group).all()
-            return jsonify({"excercises":[exercise.serialize() for exercise in exercises]}),200
+            return jsonify({"exercises": [exercise.serialize() for exercise in exercises]}), 200
     except Exception as error:
-        return jsonify({'error': str(error)}),500
+        return jsonify({'error': str(error)}), 500
 
 @api.route('/reset_password', methods=["POST"])
 def reset_password():

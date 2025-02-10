@@ -14,7 +14,7 @@ export const Admin = () => {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [send,setSend] = useState(false)
+    const [send, setSend] = useState(false)
     const [selectedUser, setSelectedUser] = useState(null);
     const navigate = useNavigate()
 

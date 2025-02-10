@@ -231,16 +231,21 @@ const getState = ({ getStore, getActions, setStore }) => {
             // saveExercises
             addExercise: async (exercise) => {
                 try {
-                    const response = await fetch(process.env.BACKEND_URL + "/saveExercise", {
+                    const response = await fetch(`${process.env.BACKEND_URL}/saveExercise`, {
                         method: "POST",
                         headers: {
                             "Authorization": `Bearer ${getStore().token}`,
-                            'Content-Type': "application/json"
+                            "Content-Type": "application/json"
                         },
                         body: JSON.stringify(exercise)
                     });
-                    return response.status
+                    const data = await response.json();
+                    if (response.ok) {
+                        return data;
+                    }
+                    return response.status;
                 } catch (error) {
+                    console.error("Error al agregar el ejercicio:", error);
                     return error;
                 }
             },
@@ -380,23 +385,23 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            getExercisesGroup: async (muscle_group) =>{
-                try{
-                    const response = await fetch(process.env.BACKEND_URL+"/getExercisesGroup",{
-                        method:"GET",
-                        headers:{
-                            "Authorization": `Bearer ${token}`,
+            getExercisesGroup: async (muscle_group) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/getExercisesGroup/${muscle_group}`, {
+                        method: "GET",
+                        headers: {
+                            "Authorization": `Bearer ${getStore().token}`,
                             "Content-Type": "application/json"
-                        },
-                        body:JSON.stringify(muscle_group)
-                    })
-                    const data = await response.json()
-                    if(response.ok){
-                        return(data)
+                        }
+                    });
+                    const data = await response.json();
+                    if (response.ok) {
+                        return data.exercises;
                     }
-                    return (response.status)
-                }catch{
-                    return(error)
+                    return response.status;
+                } catch (error) {
+                    console.error("Error al obtener los ejercicios:", error);
+                    return error;
                 }
             },
 
