@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         store: {
             token: JSON.parse(localStorage.getItem("token")) || null,
             currentUser: JSON.parse(localStorage.getItem("currentUser")) ?? null,
-            users: []
+            users: [],
+            usersRequest:[]
         },
         actions: {
             //  guardar contacto
@@ -124,6 +125,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return (error)
                 }
             },
+
+            //obtener informacion sin actual
+            getUser2: async (user_id) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/getUser2", {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${getStore().token}`,
+                            "Content-Type": "application/json"
+                        },
+                        body:JSON.stringify(user_id)
+                    })
+                    const data = await response.json()
+                    if (response.ok) {
+                        return(data)
+                    }
+                    return (response.status)
+                } catch (error) {
+                    return (error)
+                }
+            },
+
             //editar medidas
             updateMeasures: async (measures) => {
                 try {
@@ -303,9 +326,29 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (response.ok) {
                         getActions().getUser()
                     }
-
+                    return response.status
                 } catch (error) {
+                    return (error)
+                }
+            },
 
+            updateRol: async (rol) =>{
+                try{
+                    const response = await fetch(process.env.BACKEND_URL+"/updateRol",{
+                        method:"PUT",
+                        headers:{
+                            "Authorization": `Bearer ${getStore().token}`,
+                            'Content-Type': "application/json"
+                        },
+                        body:JSON.stringify(rol)
+                    })
+                    if (response.ok){
+                        getActions().getUser()
+                    }
+                    
+                    return response.status
+                }catch(error){
+                    return(error)
                 }
             },
 
@@ -359,6 +402,27 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error("Error al obtener los ejercicios:", error);
                     return error;
+                }
+            },
+
+            getAlluserRequest: async () =>{
+                try{
+                    const response = await fetch(process.env.BACKEND_URL+"/getAlluserRequest",{
+                        method:"GET",
+                        headers:{
+                            "Authorization": `Bearer ${getStore().token}`,
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    const data = await response.json()
+                    if(response.ok){
+                        setStore({
+                            usersRequest:data.solicitudes
+                        })
+                    }
+                    return (response.status)
+                }catch(error){
+                    return(error)
                 }
             }
         }

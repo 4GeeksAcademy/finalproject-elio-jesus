@@ -109,6 +109,10 @@ const Profile = () => {
         }
     }
 
+    const changeRol = async () => {
+        const response = await actions.updateRol(store?.currentUser.request.profession.toLowerCase())
+    }
+
 
     useEffect(() => { !store.token ? navigate("/login") : null }, [store.token])
 
@@ -171,9 +175,9 @@ const Profile = () => {
                                 </div>
                                 <div >
                                     {Object.keys(store?.currentUser.measures).length <= 0 ?
-                                        <button type="button" className="btn text mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                        <button type="button" className="btn boton1 text mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                             Cargar Medidas
-                                        </button> : <button type="button" className="btn text" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                        </button> : <button type="button" className="btn boton1 text" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                             Editar Medidas
                                         </button>}
                                 </div>
@@ -183,36 +187,63 @@ const Profile = () => {
                 </div>
                 <div className="row">
                     <div className="col-12 col-md-4 mt-3">
-                        <div className="border border-3 rounded-3 p-5 ">
-                            {!store?.currentUser.request.status && (
-                                <>
-                                    <h5 className="fw-bold">Quieres ofrecer tus servicios?</h5>
-                                    <p>Necesitamos verificar tu currículum y experiencia en tu área</p>
-                                    <button type="button" className="btn w-100 text" data-bs-toggle="modal" data-bs-target="#modal2">
-                                        Cargar Info
-                                    </button>
-                                </>
-                            )}
-                            {store?.currentUser.request.status === "waiting" && (
-                                <>
-                                    <h5 className="fw-bold">Estamos trabajando por ti</h5>
-                                    <p>Verificaremos tu informacion</p>
-                                    <div className="alert alert-warning" role="alert">
-                                        En espera
-                                    </div>
-                                </>
-                            )}
+                       {store.currentUser.rol === "general" && ( 
+                            <div className="border border-3 rounded-3 p-5 ">
+                                {!store?.currentUser.request.status && (
+                                    <>
+                                        <h5 className="fw-bold">Quieres ofrecer tus servicios?</h5>
+                                        <p>Necesitamos verificar tu currículum y experiencia en tu área</p>
+                                        <button type="button" className="btn boton1 w-100 text" data-bs-toggle="modal" data-bs-target="#modal2">
+                                            Cargar Info
+                                        </button>
+                                    </>
+                                )}
+                                {store?.currentUser.request.status === "waiting" && (
+                                    <>
+                                        <h5 className="fw-bold">Estamos trabajando por ti</h5>
+                                        <p>Verificaremos tu informacion</p>
+                                        <div className="alert alert-warning" role="alert">
+                                            En espera
+                                        </div>
+                                    </>
+                                )}
+                                {store?.currentUser.request.status === "refused" && (
+                                    <>
+                                        <h5 className="fw-bold">Tu solicitud ha sido rechazada</h5>
+                                        <p>Nuestros operadores vieron un fallo en tu informacion, esperemos no te desanimes </p>
+                                        <div className="alert alert-danger" role="alert">
+                                            Puedes intentar de nuevo en 48hrs
+                                        </div>
+                                    </>
+                                )}
+                                {store?.currentUser.request.status === "approved" && (
+                                    <>
+                                        <h5 className="fw-bold">Felicidades</h5>
+                                        <p>Tu solicitud ha sido aprobada, dale click para certificarte </p>
+                                        <button type="button" className="btn boton1 w-100 text" onClick={()=>changeRol()}>Certificarme</button>
+                                    </>
+                                )}
 
-                        </div>
+                            </div>
+                       )}
+
+                        {(store?.currentUser.rol == "entrenador" || store?.currentUser.rol == "nutricionista" || store?.currentUser.rol == "fisioteraputa") && ( 
+                            <div className="border border-3 rounded-3 p-5 ">
+                                <h5 className="fw-bold">{store.currentUser.rol.toUpperCase()}</h5>
+                                <h5>Certificado <i className="fa-solid fa-certificate color"></i></h5>
+                            </div>
+                       )}
+
+                       
                     </div>
                     <div className="col-12 col-md-4 mt-3">
                         <div className="border border-3 rounded-3 p-5">
-                            <div className="d-flex justify-content-between">
+                            <div className="d-flex justify-content-between mb-3">
                                 <h5 className="fw-bold mb-2">Redes</h5>
                                 {Object.keys(store?.currentUser.social).length <= 0 ?
-                                    <button type="button" className="btn text mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                    <button type="button" className="btn boton1 text mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                                         Cargar Redes
-                                    </button> : <button type="button" className="btn text" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+                                    </button> : <button type="button" className="btn boton1 text" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                                         Editar
                                     </button>
                                 }
@@ -232,12 +263,16 @@ const Profile = () => {
 
                         </div>
                     </div>
-                    <div className="col-12 col-md-4 mt-3">
-                        <div className="border border-3 rounded-3 p-5">
-                            {/* <h5 className="fw-bold">Alergias o discapacidad</h5> */}
+                    
+                    {(store?.currentUser.rol == "trainer" || store?.currentUser.rol == "nutritionist" || store?.currentUser.rol == "physiotherapist") && ( 
+                        <div className="col-12 col-md-4 mt-3">
+                            <div className="border border-3 rounded-3 p-5">
+                                {/* <h5 className="fw-bold">Alergias o discapacidad</h5> */}
 
+                            </div>
                         </div>
-                    </div>
+                    )}
+
                 </div>
             </div>
             <div style={{ height: "100px" }} ></div>
@@ -301,10 +336,10 @@ const Profile = () => {
                                 </div>
                                 {
                                     Object.keys(store?.currentUser.measures).length <= 0 ?
-                                        <button type="buttom" onClick={() => procesarMeasures("save")} className="btn btn-primary">
+                                        <button type="buttom" onClick={() => procesarMeasures("save")} className="btn boton1">
                                             Guardar
                                         </button> :
-                                        <button type="buttom" onClick={() => procesarMeasures("update")} className="btn btn-secondary">
+                                        <button type="buttom" onClick={() => procesarMeasures("update")} className="btn boton1">
                                             Editar
                                         </button>
                                 }

@@ -73,11 +73,10 @@ export const Admin = () => {
         }
     };
 
-    useEffect(() => {
-        fetchUsers();
-    }, []);
 
-    
+    const usersRequest = async () => {
+        const response = await actions.getAlluserRequest()
+    }
 
     const toggleUserActivation = async (userId, isActive) => {
         try {
@@ -110,7 +109,21 @@ export const Admin = () => {
         setSelectedUser(null);
     }
 
+    const changeStatus = async (status) => {
+        const response = await actions.updateStatus(status)
+    }
+
+    const getInfo = async (user_id) =>{
+        const response = await actions.getUser2(user_id)
+        console.log(response)
+    }
+
     useEffect(()=>{store.currentUser["rol"]!="admin"? navigate('/'):null},[])
+    useEffect(() => {
+        usersRequest()
+        fetchUsers()
+    }, [])
+
     return (
         <>
             <div className="container d-flex justify-content-center mt-5">
@@ -140,6 +153,18 @@ export const Admin = () => {
                             aria-controls="pills-usuarios"
                             aria-selected="false"
                         >Usuarios
+                        </button>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                        <button className="nav-link bg-dark text-light me-2"
+                            id="pills-ejercicios-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#pills-solicitudes"
+                            type="button"
+                            role="tab"
+                            aria-controls="pills-solicitudes"
+                            aria-selected="false"
+                        >Solicitudes
                         </button>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -205,7 +230,7 @@ export const Admin = () => {
                                             </div>
                                             <div className="container d-flex justify-content-end mb-2 ">
                                                 <button
-                                                    className={`btn ${user.is_active ? 'btn-danger' : 'btn-success'}`}
+                                                    className={`btn ${user.is_active ? 'btn-danger' : 'boton1'}`}
                                                     onClick={() => toggleUserActivation(user.id, user.is_active)}
                                                 >
                                                     {user.is_active ? 'Desactivar' : 'Activar'}
@@ -213,6 +238,88 @@ export const Admin = () => {
                                                 <button
                                                     className="btn btn-secondary ms-2"
                                                     onClick={() => showUserDetails(user)}
+                                                >
+                                                    Ver Info
+                                                </button>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </div>
+                    {selectedUser && (
+                        <div className="modal show d-block" tabIndex="-1" role="dialog">
+                            <div className="modal-dialog" role="document">
+                                <div className="modal-content">
+                                    <div className="modal-header">
+                                        <h5 className="modal-title">Detalles del Usuario</h5>
+                                        <button type="button" className="close" onClick={closeModal}>
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div className="modal-body">
+                                        <p><strong>ID:</strong> {selectedUser.id}</p>
+                                        <p><strong>Nombre:</strong> {selectedUser.firstName} {selectedUser.lastName}</p>
+                                        <p><strong>Correo:</strong> {selectedUser.email}</p>
+                                        <p><strong>Cumpleaños:</strong> {!selectedUser.birthDate ? "No cargado" : selectedUser.birthDate}</p>
+                                        <p><strong>Username:</strong> {!selectedUser.username ? "No cargado" : selectedUser.username}</p>
+                                        <p><strong>Rol:</strong> {selectedUser.rol}</p>
+                                        <p><strong>Fecha de Creación:</strong> {selectedUser.salt}</p>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="button" className="btn btn-secondary" onClick={closeModal}>Cerrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                </div>
+
+                <div className="tab-pane fade"
+                    id="pills-solicitudes"
+                    role="tabpanel"
+                    aria-labelledby="pills-solicitudes-tab"
+                >
+                    <div className="container pb-5">
+                        <div className="border border-3 rounded-3 p-5">
+                            <div className="d-flex justify-content-between align-items-center">
+                                <h3>Solicitudes</h3>
+                            </div>
+                            {loading ? (
+                                <p>Cargando usuarios...</p>
+                            ) : error ? (
+                                <p className="text-danger">{error}</p>
+                            ) : (
+                                <ul>
+                                    {store?.usersRequest.map((user, index) => (
+                                        <li key={index} className="d-flex justify-content-between align-items-center">
+                                            <div className="container">
+                                                <p className="fs-6">id: {user.id}, {user.telephone} {user.profession}</p>
+                                            </div>
+                                            <div className="container d-flex justify-content-end mb-2 ">
+                                                <button
+                                                    className='btn boton1'
+                                                    onClick={() => changeStatus(
+                                                        {"id":user.id,
+                                                        "status":"approved"}
+                                                    )}
+                                                >
+                                                    Aprobar
+                                                </button>
+                                                <button
+                                                    className="btn btn-danger ms-2"
+                                                    onClick={() => changeStatus(
+                                                        {"id":user.id,
+                                                        "status":"refused"}
+                                                    )}
+                                                >
+                                                    Rechazar
+                                                </button>
+                                                <button
+                                                    className="btn btn-secondary ms-2"
+                                                    onClick={()=>getInfo(user.user_id)}
                                                 >
                                                     Ver Info
                                                 </button>
@@ -318,16 +425,19 @@ export const Admin = () => {
                                         <option value="shoulder">Hombro</option>
                                     </select>
                                 </div>
-                                <button type="submit" className="btn btn-primary">Agregar Ejercicio</button>
+                                <button type="submit" className="btn boton1">Agregar Ejercicio</button>
                             </form>
                         </div>
                         {send && <div className="alert alert-success mt-3" role="alert">
                             Guardado con exito
                         </div>}
                         {error && <div className="alert alert-danger w-50 align-self-center lign-bottom" role="alert">{error}</div>}
+
                     </div>
                 </div>
+                
             </div>
+            <div style={{ height: "100px" }} ></div>
         </>
     );
 };
