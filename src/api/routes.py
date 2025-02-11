@@ -478,3 +478,5 @@ def updateRol():
             return jsonify("Rol actualizado"),200
     except Exception as error:
         return jsonify({'error': str(error)}),500
+    
+    

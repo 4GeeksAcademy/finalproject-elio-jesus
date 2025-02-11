@@ -14,8 +14,9 @@ export const Admin = () => {
     const [users, setUsers] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [send,setSend] = useState(false)
+    const [send, setSend] = useState(false)
     const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedRequestUser, setSelectedRequestUser] = useState(null);
     const navigate = useNavigate()
 
     const handleChange = (e) => {
@@ -28,17 +29,17 @@ export const Admin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!newExercise.name || !newExercise.description || !newExercise.url || !newExercise.muscle_group ){
+        if (!newExercise.name || !newExercise.description || !newExercise.url || !newExercise.muscle_group) {
             setError('Todos los campos son obligatorios')
-        }else{
+        } else {
             const response = await actions.addExercise(newExercise);
-            if(response==200){
+            if (response == 200) {
                 setSend(true)
                 setNewExercise({ name: '', description: '', url: '', muscle_group: '' });
                 setTimeout(() => {
                     setSend(false);
                 }, 2000);
-            }else{
+            } else {
                 setError('Error')
             }
         }
@@ -113,12 +114,18 @@ export const Admin = () => {
         const response = await actions.updateStatus(status)
     }
 
-    const getInfo = async (user_id) =>{
-        const response = await actions.getUser2(user_id)
-        console.log(response)
-    }
+    const getInfo = async (user_id) => {
+        const response = await actions.getUser2(user_id);
+        if (response) {
+            setSelectedRequestUser(response); 
+        }
+    };
 
-    useEffect(()=>{store.currentUser["rol"]!="admin"? navigate('/'):null},[])
+    const showRequestUserDetails = (user) => {
+        setSelectedRequestUser(user);
+    };
+
+    useEffect(() => { store.currentUser["rol"] != "admin" ? navigate('/') : null }, [])
     useEffect(() => {
         usersRequest()
         fetchUsers()
@@ -302,8 +309,10 @@ export const Admin = () => {
                                                 <button
                                                     className='btn boton1'
                                                     onClick={() => changeStatus(
-                                                        {"id":user.id,
-                                                        "status":"approved"}
+                                                        {
+                                                            "id": user.id,
+                                                            "status": "approved"
+                                                        }
                                                     )}
                                                 >
                                                     Aprobar
@@ -311,15 +320,17 @@ export const Admin = () => {
                                                 <button
                                                     className="btn btn-danger ms-2"
                                                     onClick={() => changeStatus(
-                                                        {"id":user.id,
-                                                        "status":"refused"}
+                                                        {
+                                                            "id": user.id,
+                                                            "status": "refused"
+                                                        }
                                                     )}
                                                 >
                                                     Rechazar
                                                 </button>
                                                 <button
                                                     className="btn btn-secondary ms-2"
-                                                    onClick={()=>getInfo(user.user_id)}
+                                                    onClick={() => showRequestUserDetails(user)}
                                                 >
                                                     Ver Info
                                                 </button>
@@ -330,33 +341,35 @@ export const Admin = () => {
                             )}
                         </div>
                     </div>
-                    {selectedUser && (
+                    {selectedRequestUser && (
                         <div className="modal show d-block" tabIndex="-1" role="dialog">
                             <div className="modal-dialog" role="document">
                                 <div className="modal-content">
                                     <div className="modal-header">
                                         <h5 className="modal-title">Detalles del Usuario</h5>
-                                        <button type="button" className="close" onClick={closeModal}>
+                                        <button type="button" className="close" onClick={() => setSelectedRequestUser(null)}>
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div className="modal-body">
-                                        <p><strong>ID:</strong> {selectedUser.id}</p>
-                                        <p><strong>Nombre:</strong> {selectedUser.firstName} {selectedUser.lastName}</p>
-                                        <p><strong>Correo:</strong> {selectedUser.email}</p>
-                                        <p><strong>Cumpleaños:</strong> {!selectedUser.birthDate ? "No cargado" : selectedUser.birthDate}</p>
-                                        <p><strong>Username:</strong> {!selectedUser.username ? "No cargado" : selectedUser.username}</p>
-                                        <p><strong>Rol:</strong> {selectedUser.rol}</p>
-                                        <p><strong>Fecha de Creación:</strong> {selectedUser.salt}</p>
+                                        <p><strong>ID:</strong> {selectedRequestUser.id}</p>
+                                        <p><strong>Nombre:</strong> {selectedRequestUser.firstName } {selectedRequestUser.lastName}</p>
+                                        <p><strong>Username:</strong> {selectedRequestUser.username}</p>
+                                        <p><strong>Correo:</strong> {selectedRequestUser.email}</p>
+                                        <p><strong>Teléfono:</strong> {selectedRequestUser.telephone}</p>
+                                        <p><strong>Profesión:</strong> {selectedRequestUser.profession}</p>
+                                        <p><strong>Rol:</strong> {selectedRequestUser.rol}</p>
+                                        <p><strong>Fecha de Creación:</strong> {selectedRequestUser.salt}</p>
                                     </div>
                                     <div className="modal-footer">
-                                        <button type="button" className="btn btn-secondary" onClick={closeModal}>Cerrar</button>
+                                        <button type="button" className="btn btn-secondary" onClick={() => setSelectedRequestUser(null)}>
+                                            Cerrar
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     )}
-
                 </div>
 
                 <div className="tab-pane fade"
@@ -435,7 +448,7 @@ export const Admin = () => {
 
                     </div>
                 </div>
-                
+
             </div>
             <div style={{ height: "100px" }} ></div>
         </>
