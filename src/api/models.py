@@ -4,7 +4,7 @@ db = SQLAlchemy()
 
 class Rol(Enum):
     general="general"
-    entrenador="entrenaodr"
+    entrenador="entrenador"
     nutricionista="nutricionista"
     fisioterapeuta="fisioterapeuta"
     admin="admin"

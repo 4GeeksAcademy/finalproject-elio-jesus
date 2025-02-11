@@ -76,6 +76,22 @@ h1,h3{
     color: rgb(63, 166, 37);
 }
 
+.up{
+    transform: translateY(-30%);
+}
+
+.background-green{
+    background-color: rgb(63, 166, 37) ;
+}
+
+.background-white{
+    background-color: aliceblue;
+}
+
+.borde{
+    border-radius: 30px;
+}
+
 .footer { 
     position: fixed ; 
     bottom: 0 ; 

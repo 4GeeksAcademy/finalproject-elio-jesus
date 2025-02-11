@@ -15,6 +15,8 @@ import { ArmsExercises } from "./pages/armsExercises.jsx";
 import { AbdomenExercises } from "./pages/abdomenExercises.jsx";
 import { LegsExercises } from "./pages/legsExercises.jsx";
 import { ShouldersExercises } from "./pages/shouldersExercises.jsx";
+import Service from "./pages/service.jsx";
+import ServiceDetail from "./pages/serviceDetail.jsx";
 import { Admin } from "./pages/admin.jsx";
 import ResetPassword from "./pages/resetPassword.jsx";
 import UpdatePassword from "./pages/updatePassword.jsx";
@@ -40,6 +42,8 @@ const Layout = () => {
                     <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
+                        <Route element={<Service />} path="/service" />
+                        <Route element={<ServiceDetail />} path="/service_detail/:id" />
                         <Route element={<Exercises />} path="/exercises" />
                         <Route element={<ArmsExercises />} path="/arms_exercises" />
                         <Route element={<ChestExercises />} path="/chest_exercises" />

@@ -239,10 +239,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(exercise)
                     });
-                    const data = await response.json();
-                    if (response.ok) {
-                        return data;
-                    }
+                    
                     return response.status;
                 } catch (error) {
                     console.error("Error al agregar el ejercicio:", error);
