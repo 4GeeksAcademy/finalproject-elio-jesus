@@ -21,6 +21,7 @@ import { Admin } from "./pages/admin.jsx";
 import ResetPassword from "./pages/resetPassword.jsx";
 import UpdatePassword from "./pages/updatePassword.jsx";
 import Payment from "./pages/payment.jsx";
+import { Trainer } from "./pages/trainer.jsx";
 
 
 import injectContext from "./store/appContext";
@@ -61,6 +62,7 @@ const Layout = () => {
                         <Route element={<Admin />} path="/admin" />
                         <Route element={<ResetPassword />} path="/reset_password" />
                         <Route element={<UpdatePassword />} path="/update_password" />
+                        <Route element={<Trainer />} path="/trainer" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
