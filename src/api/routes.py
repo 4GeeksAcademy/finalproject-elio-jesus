@@ -210,12 +210,14 @@ def getUser2():
 @api.route('/getUsersForRol', methods=['GET'])
 def getUsersForRol():
     try:
-        body = request.json
-        rol = body.get('rol')
+        rol = request.args.get('rol')  # Usa request.args para obtener el parámetro de la URL
+        if not rol:
+            return jsonify({"error": "El parámetro 'rol' es requerido"}), 400
+
         users = User.query.filter_by(rol=rol).all()
-        return jsonify({"users":[user.serialize() for user in users]})
+        return jsonify({"users": [user.serialize() for user in users]})
     except Exception as error:
-        return jsonify({'error': str(error)}),500
+        return jsonify({'error': str(error)}), 500
     
 @api.route('/saveSocial', methods=['POST'])
 @jwt_required()
@@ -462,3 +464,13 @@ def updateRol():
             return jsonify("Rol actualizado"),200
     except Exception as error:
         return jsonify({'error': str(error)}),500
+    
+@api.route('/getApprovedTrainers', methods=['GET'])
+@jwt_required()
+def get_approved_trainers():
+    try:
+        # Filtra usuarios por rol "entrenador" y estado "approved"
+        trainers = User.query.filter_by(rol="entrenador").join(Request).filter(Request.status == "approved").all()
+        return jsonify({"trainers": [trainer.serialize() for trainer in trainers]}), 200
+    except Exception as error:
+        return jsonify({'error': str(error)}), 500

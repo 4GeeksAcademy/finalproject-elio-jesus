@@ -1,30 +1,58 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 export const Trainer = () => {
-    const { store, actions } = useContext(Context); // Acceder al contexto
-    const [trainers, setTrainers] = useState([]); // Estado local para almacenar los entrenadores
+    const { store, actions } = useContext(Context);
+    const [trainers, setTrainers] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Efecto para cargar los entrenadores al montar el componente
-    useEffect(() => {
-        if (store.trainers) { // Verifica si hay entrenadores en el store
-            setTrainers(store.trainers); // Actualiza el estado local con los entrenadores
+    const fetchApprovedTrainers = async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`${process.env.BACKEND_URL}/getApprovedTrainers`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${store.token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error("Error al obtener los entrenadores aprobados");
+            }
+
+            const data = await response.json();
+            setTrainers(data.trainers);
+            setLoading(false);
+        } catch (error) {
+            setError(error.message);
+            setLoading(false);
         }
-    }, [store.trainers]); // Dependencia: cuando cambien los entrenadores en el store
+    };
+
+    useEffect(() => {
+        if (store.token) {
+            fetchApprovedTrainers();
+        } else {
+            setError("No estás autenticado. Por favor, inicia sesión.");
+            setLoading(false);
+        }
+    }, [store.token]);
+
+    if (loading) return <div>Cargando entrenadores...</div>;
+    if (error) return <div>Error: {error}</div>;
+    if (trainers.length === 0) return <div>No hay entrenadores aprobados disponibles.</div>;
 
     return (
         <div className="container">
-            
-            <h2>Lista de Entrenadores</h2>
+            <h2>Entrenadores</h2>
             <ul>
                 {trainers.map((trainer, index) => (
                     <li key={index}>
-                        {trainer.name} - {trainer.email}
+                        {trainer.firstName} {trainer.lastName} - {trainer.email}
                     </li>
                 ))}
             </ul>
         </div>
     );
 };
-

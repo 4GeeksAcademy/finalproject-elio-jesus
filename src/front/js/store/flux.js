@@ -169,7 +169,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-
             //guardar social
             saveSocial: async (social) => {
                 try {
@@ -246,7 +245,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return error;
                 }
             },
-
 
             //editar social
             updateSocial: async (social) => {
