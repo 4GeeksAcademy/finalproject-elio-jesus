@@ -4,7 +4,7 @@ db = SQLAlchemy()
 
 class Rol(Enum):
     general="general"
-    entrenador="entrenaodr"
+    entrenador="entrenador"
     nutricionista="nutricionista"
     fisioterapeuta="fisioterapeuta"
     admin="admin"
@@ -46,6 +46,7 @@ class User(db.Model):
     measures = db.relationship('Measures',uselist=False, back_populates='user')
     social = db.relationship('Social', uselist=False, back_populates='user')
     request = db.relationship('Request', uselist=False, back_populates='user')
+    invoice = db.relationship('Invoice', uselist=True ,back_populates='user')
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -171,5 +172,23 @@ class Exercise(db.Model):
             "url":self.url,
             "description":self.description,
             "muscle_group":self.muscle_group.value
+        }
+
+class Invoice(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    order_id = db.Column(db.String(40),unique=True, nullable=False)
+    payer_id = db.Column(db.String(40),unique=True, nullable=False)
+    payment_id = db.Column(db.String(40),unique=True, nullable=False)
+    payment_source = db.Column(db.String(10),nullable=False)
+    user_id = db.Column(db.Integer,db.ForeignKey('user.id'), nullable=False)
+
+    user = db.relationship('User', back_populates='invoice')
+
+    def serialize(self):
+        return{
+            "id":self.id,
+            "order_id":self.order_id,
+            "payment_id":self.payment_id,
+            "payment_source":self.payment_source
         }
 

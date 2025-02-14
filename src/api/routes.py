@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User,Measures,Social,Request,Exercise
+from api.models import db, User,Measures,Social,Request,Exercise,Invoice
 from api.utils import generate_sitemap, APIException,sendEmail
 from flask_cors import CORS
 import os
@@ -207,15 +207,6 @@ def getUser2():
     except Exception as error:
         return jsonify({'error': str(error)})
 
-@api.route('/getUsersForRol', methods=['GET'])
-def getUsersForRol():
-    try:
-        body = request.json
-        rol = body.get('rol')
-        users = User.query.filter_by(rol=rol).all()
-        return jsonify({"users":[user.serialize() for user in users]})
-    except Exception as error:
-        return jsonify({'error': str(error)}),500
     
 @api.route('/saveSocial', methods=['POST'])
 @jwt_required()
@@ -462,3 +453,55 @@ def updateRol():
             return jsonify("Rol actualizado"),200
     except Exception as error:
         return jsonify({'error': str(error)}),500
+
+@api.route('/saveInvoice', methods=['POST'])
+@jwt_required()
+def saveInvoice():
+    try:
+        body = request.json
+        order_id = body.get('order_id')
+        payer_id = body.get('payer_id')
+        payment_id = body.get('payment_id')
+        payment_source = body.get('payment_source')
+        user_id = get_jwt_identity()
+
+        invoice = Invoice(
+            order_id=order_id,
+            payer_id=payer_id,
+            payment_id=payment_id,
+            payment_source=payment_source,
+            user_id=user_id
+        )
+        db.session.add(invoice)
+        try:
+            db.session.commit()
+            return jsonify("factura guardada"),200
+        except Exception as error:
+            return jsonify({'error': str(error)}),500
+        
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
+    
+
+@api.route('/getInvoices', methods=['GET'])
+@jwt_required()
+def getInvoices():
+    try:
+        user_id = get_jwt_identity()
+        invoices = Invoice.query.filter_by(user_id=user_id).all()
+        return jsonify({"invoices":[invoice.serialize() for invoice in invoices]})
+    except Exception as error:
+        return jsonify({'error': str(error)}),500
+
+@api.route('/getUserForRol', methods=['POST'])
+def get_user_for_rol():
+    try:
+        body = request.json
+       
+        rol = body.get("rol")
+        users = User.query.filter_by(rol=rol).all()
+        
+        return jsonify({"users": [user.serialize() for user in users]}), 200
+    except Exception as error:
+        return jsonify({'error': str(error)}), 500
+

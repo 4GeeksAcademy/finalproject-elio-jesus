@@ -76,11 +76,36 @@ h1,h3{
     color: rgb(63, 166, 37);
 }
 
+.up{
+    transform: translateY(-30%);
+}
+
+.background-green{
+    background-color: rgb(63, 166, 37) ;
+}
+
+.background-white{
+    background-color: aliceblue;
+}
+
+.background-black{
+    background-color: black;
+}
+
+.borde{
+    border-radius: 20px;
+}
+
+.width-exercise{
+    max-width: 70%;
+}
+
 .footer { 
     position: fixed ; 
     bottom: 0 ; 
     margin-top: 100px;
 }
+
 
 
 

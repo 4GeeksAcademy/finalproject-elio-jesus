@@ -1,14 +1,14 @@
 """empty message
 
-<<<<<<<< HEAD:migrations/versions/86eb859403af_.py
-Revision ID: 86eb859403af
+<<<<<<<< HEAD:migrations/versions/e374befffcca_.py
+Revision ID: e374befffcca
 Revises: 
-Create Date: 2025-02-10 19:00:25.588112
+Create Date: 2025-02-14 03:15:15.965375
 ========
-Revision ID: f3430498192f
+Revision ID: 43fdb86d867b
 Revises: 
-Create Date: 2025-02-07 22:35:30.615277
->>>>>>>> 4621eda8950df7165c50a0d3b2b1ca036e6366e3:migrations/versions/f3430498192f_.py
+Create Date: 2025-02-14 20:25:42.292696
+>>>>>>>> 9f38d68167a5b89efe848921923f2a01bde3502c:migrations/versions/43fdb86d867b_.py
 
 """
 from alembic import op
@@ -16,11 +16,11 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:migrations/versions/86eb859403af_.py
-revision = '86eb859403af'
+<<<<<<<< HEAD:migrations/versions/e374befffcca_.py
+revision = 'e374befffcca'
 ========
-revision = 'f3430498192f'
->>>>>>>> 4621eda8950df7165c50a0d3b2b1ca036e6366e3:migrations/versions/f3430498192f_.py
+revision = '43fdb86d867b'
+>>>>>>>> 9f38d68167a5b89efe848921923f2a01bde3502c:migrations/versions/43fdb86d867b_.py
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -54,6 +54,19 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
+    )
+    op.create_table('invoice',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('order_id', sa.String(length=40), nullable=False),
+    sa.Column('payer_id', sa.String(length=40), nullable=False),
+    sa.Column('payment_id', sa.String(length=40), nullable=False),
+    sa.Column('payment_source', sa.String(length=10), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('order_id'),
+    sa.UniqueConstraint('payer_id'),
+    sa.UniqueConstraint('payment_id')
     )
     op.create_table('measures',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -92,6 +105,7 @@ def downgrade():
     op.drop_table('social')
     op.drop_table('request')
     op.drop_table('measures')
+    op.drop_table('invoice')
     op.drop_table('user')
     op.drop_table('exercise')
     # ### end Alembic commands ###

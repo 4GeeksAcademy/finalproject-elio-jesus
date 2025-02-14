@@ -34,15 +34,15 @@ export const ShouldersExercises = () => {
                 <p className="text-danger">{error}</p>
             ) : (
                 shoulderExercises.map(exercise => (
-                    <div className="row border mt-3" key={exercise.id}>
-                        <div className="col-6">
+                    <div className="row borde border border-success mt-3" key={exercise.id}>
+                        <div className="col-6 justify-content-center">
                             <h2 className="fw-bold mt-4 pb-3">{exercise.name}</h2>
                             <p className="mt-5">{exercise.description}</p>
                         </div>
                         <div className="col-6 mt-2 mb-2 d-flex justify-content-end">
                             <iframe
                                 src={exercise.url}
-                                className="videos"
+                                className="videos borde border"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                 allowFullScreen
                                 title={exercise.name}

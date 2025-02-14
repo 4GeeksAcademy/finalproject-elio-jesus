@@ -219,15 +219,18 @@ const Profile = () => {
                                 {store?.currentUser.request.status === "approved" && (
                                     <>
                                         <h5 className="fw-bold">Felicidades</h5>
-                                        <p>Tu solicitud ha sido aprobada, dale click para certificarte </p>
-                                        <button type="button" className="btn boton1 w-100 text" onClick={()=>changeRol()}>Certificarme</button>
+                                        <p>Tu solicitud ha sido aprobada, dale click para pagar la suscripcion y que tu perfil sea publico </p>
+                                        {/* <button type="button" className="btn boton1 w-100 text" onClick={()=>changeRol()}>Certificarme</button> */}
+                                        <Link to="/payment">
+                                            <button type="button" className="btn boton1 w-100 text" onClick={()=>changeRol()}>Pagar</button>
+                                        </Link>
                                     </>
                                 )}
 
                             </div>
                        )}
 
-                        {(store?.currentUser.rol == "entrenador" || store?.currentUser.rol == "nutricionista" || store?.currentUser.rol == "fisioteraputa") && ( 
+                        {(store?.currentUser.rol == "entrenador" || store?.currentUser.rol == "nutricionista" || store?.currentUser.rol == "fisioterapeuta") && ( 
                             <div className="border border-3 rounded-3 p-5 ">
                                 <h5 className="fw-bold">{store.currentUser.rol.toUpperCase()}</h5>
                                 <h5>Certificado <i className="fa-solid fa-certificate color"></i></h5>

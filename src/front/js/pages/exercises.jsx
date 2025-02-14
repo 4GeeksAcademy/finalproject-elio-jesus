@@ -11,37 +11,37 @@ const Exercises = () => {
             id: 'chest_exercises',
             nombre: 'Pectorales',
             descripcion: 'ejercicios para fortalecer el pecho.',
-            imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+            imagen: 'https://res.cloudinary.com/dntc8trob/image/upload/v1739574697/pexels-olly-3837757_nkxqim.jpg'
         },
         {
             id: 'back_exercises',
             nombre: 'Espalda',
             descripcion: 'Ejercicios para fortalecer la espalda.',
-            imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+            imagen: 'https://res.cloudinary.com/dntc8trob/image/upload/v1739574852/pexels-pixabay-50597_vrnyv7.jpg'
         },
 		{
 			id: 'arms_exercises',
 			nombre: 'Brazos',
 			descripcion:'Ejercicios para fortalecer biceps y triceps',
-			imagen:'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+			imagen:'https://res.cloudinary.com/dntc8trob/image/upload/v1739574610/pexels-andres-ayrton-6550874_jca2my.jpg'
 		},
 		{
 			id: 'legs_exercises',
 			nombre: 'Piernas',
 			descripcion: 'Ejercicios para fortalecer piernas y pantorrillas',
-			imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+			imagen: 'https://res.cloudinary.com/dntc8trob/image/upload/v1739575025/pexels-scottwebb-136404_rz2sqe.jpg'
 		},
 		{
 			id: 'abdomen_exercises',
 			nombre: 'Abdomen',
 			descripcion: 'Ejercicios para fortalecer el abdomen',
-			imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+			imagen: 'https://res.cloudinary.com/dntc8trob/image/upload/v1739575085/pexels-jonathanborba-3076516_d7n6rl.jpg'
 		},
 		{
 			id: 'shoulders_exercises',
 			nombre: 'Hombros',
 			descripcion: 'Ejercicios para fortalecer hombros',
-			imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+			imagen: 'https://res.cloudinary.com/dntc8trob/image/upload/v1739575168/pexels-tima-miroshnichenko-5327508_cpjlix.jpg'
 		}
         
     ];
