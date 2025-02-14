@@ -22,7 +22,8 @@ import ResetPassword from "./pages/resetPassword.jsx";
 import UpdatePassword from "./pages/updatePassword.jsx";
 import Payment from "./pages/payment.jsx";
 import { Trainer } from "./pages/trainer.jsx";
-
+import { Fisio } from "./pages/fisio.jsx";
+import { Nutritionist } from "./pages/nutritionist.jsx"
 
 import injectContext from "./store/appContext";
 
@@ -63,6 +64,8 @@ const Layout = () => {
                         <Route element={<ResetPassword />} path="/reset_password" />
                         <Route element={<UpdatePassword />} path="/update_password" />
                         <Route element={<Trainer />} path="/trainer" />
+                        <Route element={<Fisio />} path="/fisio" />
+                        <Route element={<Nutritionist  />} path="/nutritionist" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

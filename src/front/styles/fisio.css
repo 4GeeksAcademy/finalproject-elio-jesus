@@ -1,0 +1,80 @@
+.fisio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.fisio-card {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    position: relative;  /* Para posicionar la imagen de forma absoluta */
+    padding-top: 120px;  /* Espacio para la imagen */
+}
+
+.fisio-info {
+    margin-top: 20px;  /* Espacio adicional para la imagen */
+}
+
+.fisio-info h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.fisio-info p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.fisio-actions {
+    display: flex;
+    gap: 10px;  /* Espacio entre los botones */
+    margin-top: 15px;
+}
+
+.btn-details, .btn-favorite {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    flex: 1;  /* Los botones ocupan el mismo espacio */
+}
+
+.btn-details {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-details:hover {
+    background-color: #0056b3;
+}
+
+.btn-favorite {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.btn-favorite:hover {
+    background-color: #218838;
+}
+
+.fisio-image {
+    width: 100px;  /* Tamaño más grande */
+    height: 100px;  /* Tamaño más grande */
+    border-radius: 50%;  /* Hace que la imagen sea redonda */
+    overflow: hidden;  /* Oculta cualquier parte de la imagen que sobresalga */
+    position: absolute;  /* Posiciona la imagen de forma absoluta */
+    top: 15px;  /* Distancia desde la parte superior */
+    right: 15px;  /* Distancia desde la parte derecha */
+}
+
+.fisio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Ajusta la imagen para cubrir el contenedor */
+}

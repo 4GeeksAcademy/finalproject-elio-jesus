@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             token: JSON.parse(localStorage.getItem("token")) || null,
             currentUser: JSON.parse(localStorage.getItem("currentUser")) ?? null,
             users: [],
-            usersRequest:[]
+            usersRequest: []
         },
         actions: {
             //  guardar contacto
@@ -72,7 +72,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {
                             "Authorization": `Bearer ${getStore().token}`
                         },
-                        body:contact
+                        body: contact
                     })
 
                     if (response.ok) {
@@ -135,11 +135,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                             "Authorization": `Bearer ${getStore().token}`,
                             "Content-Type": "application/json"
                         },
-                        body:JSON.stringify(user_id)
+                        body: JSON.stringify(user_id)
                     })
                     const data = await response.json()
                     if (response.ok) {
-                        return(data)
+                        return (data)
                     }
                     return (response.status)
                 } catch (error) {
@@ -238,7 +238,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(exercise)
                     });
-                    
+
                     return response.status;
                 } catch (error) {
                     console.error("Error al agregar el ejercicio:", error);
@@ -327,23 +327,23 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            updateRol: async (rol) =>{
-                try{
-                    const response = await fetch(process.env.BACKEND_URL+"/updateRol",{
-                        method:"PUT",
-                        headers:{
+            updateRol: async (rol) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/updateRol", {
+                        method: "PUT",
+                        headers: {
                             "Authorization": `Bearer ${getStore().token}`,
                             'Content-Type': "application/json"
                         },
-                        body:JSON.stringify(rol)
+                        body: JSON.stringify(rol)
                     })
-                    if (response.ok){
+                    if (response.ok) {
                         getActions().getUser()
                     }
-                    
+
                     return response.status
-                }catch(error){
-                    return(error)
+                } catch (error) {
+                    return (error)
                 }
             },
 
@@ -400,28 +400,49 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            getAlluserRequest: async () =>{
-                try{
-                    const response = await fetch(process.env.BACKEND_URL+"/getAlluserRequest",{
-                        method:"GET",
-                        headers:{
+            getAlluserRequest: async () => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/getAlluserRequest", {
+                        method: "GET",
+                        headers: {
                             "Authorization": `Bearer ${getStore().token}`,
                             "Content-Type": "application/json"
                         }
                     })
                     const data = await response.json()
-                    if(response.ok){
+                    if (response.ok) {
                         setStore({
-                            usersRequest:data.solicitudes
+                            usersRequest: data.solicitudes
                         })
                     }
                     return (response.status)
-                }catch(error){
-                    return(error)
+                } catch (error) {
+                    return (error)
+                }
+            },
+
+            getUserForRol: async (rol) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/getUserForRol`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(rol)
+                    })
+                    const data = await response.json();
+                    if (response.ok) {
+                        return (data)
+                    }
+                } catch (error) {
+                    return (error)
                 }
             }
         }
-    };
+    }
+
 };
+
+
 
 export default getState;
