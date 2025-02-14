@@ -1,0 +1,43 @@
+.fondo{
+    background-color: rgb(63, 166, 37);
+}
+
+.imagen{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    /* overflow: hidden; */
+    transform: translate(0,50%);
+    margin-bottom: -1rem;
+}
+
+.imagen-detalle{
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+}
+
+.text{
+    color: aliceblue;
+}
+
+.data-text{
+    color:grey;
+}
+
+.fondo-grande{
+    background-color: ghostwhite;
+}
+
+h3{
+    color:rgb(63, 166, 37);
+}
+
+.boton{
+    background-color: rgb(63, 166, 37);
+}
+
+.icono{
+    font-size: 30px;
+    color:rgb(63, 166, 37);
+}

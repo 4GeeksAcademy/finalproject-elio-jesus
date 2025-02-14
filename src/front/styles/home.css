@@ -1,7 +1,111 @@
-/*
-    home.css: This website contains selectors only used in home.css
+body {
+    margin: 0;
+    padding: 0;
+  
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+h5,h2{
+    font-family: "Nunito Sans", serif;
+    font-weight:700 ;
+    font-size:30px
+}
+
+p{
+    font-family: "Nunito Sans", serif;
+    font-weight: 300;  
+}
+
+h1,h3{
+    font-family: "Nunito Sans", serif;
+    font-weight:600 ; 
+}
+
+.nunito-sans-text {
+    font-family: "Nunito Sans", serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100,
+      "YTLC" 500;
+}
+
+.hero {
+    background-image: url('https://res.cloudinary.com/dntc8trob/image/upload/v1738467121/imagen-principal_rj3b5z.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 100px 100px;
+    height: 700px;
+}
+
+.footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.cards {
+     height: 400px;
+     width: auto;
+}
+
+.imgs {
+    height: 400px;
+    width: 100%;
+}
+
+.testimonialI {
+    height: 150px;
+    width: 150px;
+}
+
+.imput {
+    border-radius: 20px;
+    width: 300px;;
+}
+
+.margin{
+    padding-bottom:50px;
+}
+
+
+.color{
+    color: rgb(63, 166, 37);
+}
+
+.up{
+    transform: translateY(-30%);
+}
+
+.background-green{
+    background-color: rgb(63, 166, 37) ;
+}
+
+.background-white{
+    background-color: aliceblue;
+}
+
+.background-black{
+    background-color: black;
+}
+
+.borde{
+    border-radius: 20px;
+}
+
+.width-exercise{
+    max-width: 70%;
+}
+
+.footer { 
+    position: fixed ; 
+    bottom: 0 ; 
+    margin-top: 100px;
+}
+
+
+
+
