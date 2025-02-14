@@ -20,12 +20,14 @@ import ServiceDetail from "./pages/serviceDetail.jsx";
 import { Admin } from "./pages/admin.jsx";
 import ResetPassword from "./pages/resetPassword.jsx";
 import UpdatePassword from "./pages/updatePassword.jsx";
+import Payment from "./pages/payment.jsx";
 
 
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer.jsx";
+import formWallet from "./component/formWallet.jsx";
 
 //create your first component
 const Layout = () => {
@@ -53,6 +55,7 @@ const Layout = () => {
                         <Route element={<ShouldersExercises />} path="/shoulders_exercises" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
+                        <Route element={<Payment />} path="/payment" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EditProfile />} path="/edit_profile" />
                         <Route element={<Admin />} path="/admin" />

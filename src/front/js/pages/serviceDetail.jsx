@@ -1,10 +1,13 @@
-import React,{useState,useEffect,useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 
 
 const ServiceDetail = () => {
-   return(
-        <div className="container vh-100 d-flex align-items-center  ">
+    return (
+        <div className="container vh-100 d-flex flex-column align-items-center  ">
+            <div>
+                <h1>Informacion de </h1>
+            </div>
             <div className="row vw-100 justify-content-around p-5 borde background-green">
                 <div className="col-5 borde d-flex p-4 background-white">
                     <div className="derecha ms-3 me-2">
@@ -29,7 +32,7 @@ const ServiceDetail = () => {
                 </div>
             </div>
         </div>
-   )
+    )
 }
 
 export default ServiceDetail

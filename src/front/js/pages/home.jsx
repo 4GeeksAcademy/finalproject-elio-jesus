@@ -32,11 +32,11 @@ export const Home = () => {
             <div className="container">
                 <div className="row mt-5 pb-5">
                     <div className="col-12 col-md-6">
-                        <img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs" alt="..." />
+                        <img src="https://res.cloudinary.com/dntc8trob/image/upload/v1739574219/pexels-karen-irala-242489519-14099910_jwxcr1.jpg" className="img-fluid imgs" alt="..." />
                     </div>
                     <div className="col-md-6 d-flex align-items-center">
                         <div className="pt-4">
-                            <h5 className="card-title text-center pt-4 mb-5">Ejercicios</h5>
+                            <h5 className="card-title text-center pt-4 mb-5">Rutinas</h5>
                             <p className="card-text text-center mb-5">En nuestra página encontraras una serie de ejercicios y rutinas
                                 según sea tu necesidad
                             </p>
@@ -63,7 +63,7 @@ export const Home = () => {
                         </div>
                     </div>
                     <div className="col-12 col-md-6">
-                        <img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
+                        <img src="https://res.cloudinary.com/dntc8trob/image/upload/v1739572714/ftrwllrafvc7umrcrekm.jpg" className="img-fluid imgs " alt="..." />
                     </div>
                 </div>
 
@@ -72,7 +72,7 @@ export const Home = () => {
 
                 <div className="row pt-5 pb-5">
                     <div className="col-12 col-md-6">
-                        <img src="https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg" className="img-fluid imgs " alt="..." />
+                        <img src="https://res.cloudinary.com/dntc8trob/image/upload/v1739572993/pexels-tima-miroshnichenko-5327507_oxjktg.jpg" className="img-fluid imgs " alt="..." />
                     </div>
                     <div className="col-md-6 d-flex align-items-center">
                         <div className="">

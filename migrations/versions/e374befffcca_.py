@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 025b666244fd
+Revision ID: e374befffcca
 Revises: 
-Create Date: 2025-02-11 00:32:19.360578
+Create Date: 2025-02-14 03:15:15.965375
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '025b666244fd'
+revision = 'e374befffcca'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -44,6 +44,19 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('username')
+    )
+    op.create_table('invoice',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('order_id', sa.String(length=40), nullable=False),
+    sa.Column('payer_id', sa.String(length=40), nullable=False),
+    sa.Column('payment_id', sa.String(length=40), nullable=False),
+    sa.Column('payment_source', sa.String(length=10), nullable=False),
+    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('order_id'),
+    sa.UniqueConstraint('payer_id'),
+    sa.UniqueConstraint('payment_id')
     )
     op.create_table('measures',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -82,6 +95,7 @@ def downgrade():
     op.drop_table('social')
     op.drop_table('request')
     op.drop_table('measures')
+    op.drop_table('invoice')
     op.drop_table('user')
     op.drop_table('exercise')
     # ### end Alembic commands ###
