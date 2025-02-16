@@ -15,7 +15,7 @@ export const Navbar = () => {
 						<div className="navbar-nav d-flex flex-row">
 							<Link className="linea" to="/"><a className="nav-link active pe-3" >Inicio</a></Link>
 							<Link className="linea" to="/exercises"><a className="nav-link active pe-3">Ejercicios</a></Link>
-							<Link className="linea" to="/"><a className="nav-link active pe-5">Servicios</a></Link>
+							<Link className="linea" to="/service"><a className="nav-link active pe-5">Servicios</a></Link>
 							{/* <Link className="linea" to="/"><a className="nav-link active pe-5">Nosotros</a></Link> */}
 							
 						</div>
