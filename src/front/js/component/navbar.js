@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import "../../styles/navbar.css"
+import "../../img/logo.png"
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context)
@@ -9,7 +10,7 @@ export const Navbar = () => {
 		<nav className="navbar navbar-dark bg-dark">
 			<div className="container">
 				<Link className="name" to="/">
-					<span className="navbar-brand mb-0 h1">Gym Bro</span>
+					<img src="../../img/logo.png"/>
 				</Link>
 				<div className="d-flex ">
 						<div className="navbar-nav d-flex flex-row">

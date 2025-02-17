@@ -32,16 +32,16 @@ export const Fisio = () => {
             <div className="fisio-grid">
                 {fisios.map((fisio) => (
                     <div key={fisio.id} className="fisio-card">
-                        <div className="fisio-image">
-                            <img src={!store.currentUser['avatar']? `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png`:store.currentUser['avatar']} alt="Fisioterapeuta" />
-                        </div>
                         <div className="fisio-info">
                             <h3>{fisio.firstName} {fisio.lastName}</h3>
                             <p>{fisio.email}</p>
-                            <div className="fisio-actions">
+                            <div className="fisio-actions pt-3">
                                 <button className="btn-details">Detalles</button>
                                 <button className="btn-favorite">Agregar a favoritos</button>
                             </div>
+                        </div>
+                        <div className="fisio-image">
+                            <img src={!store.currentUser['avatar']? `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png`:store.currentUser['avatar']} alt="Nutricionista" />
                         </div>
                     </div>
                 ))}

@@ -12,11 +12,10 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     position: relative;  /* Para posicionar la imagen de forma absoluta */
-    padding-top: 120px;  /* Espacio para la imagen */
 }
 
 .fisio-info {
-    margin-top: 20px;  /* Espacio adicional para la imagen */
+    margin-top: 20px;  /* Espacio para la imagen */
 }
 
 .fisio-info h3 {

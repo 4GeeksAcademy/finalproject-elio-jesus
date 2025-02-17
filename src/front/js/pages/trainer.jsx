@@ -32,16 +32,16 @@ export const Trainer = () => {
             <div className="trainer-grid">
                 {trainers.map((trainer) => (
                     <div key={trainer.id} className="trainer-card">
-                        <div className="trainer-image">
-                            <img src={!store.currentUser['avatar']? `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png`:store.currentUser['avatar']} alt="Entrenador" />
-                        </div>
                         <div className="trainer-info">
                             <h3>{trainer.firstName} {trainer.lastName}</h3>
                             <p>{trainer.email}</p>
-                            <div className="trainer-actions">
+                            <div className="trainer-actions pt-3">
                                 <button className="btn-details">Detalles</button>
                                 <button className="btn-favorite">Agregar a favoritos</button>
                             </div>
+                        </div>
+                        <div className="trainer-image">
+                            <img src={!store.currentUser['avatar']? `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png`:store.currentUser['avatar']} alt="Nutricionista" />
                         </div>
                     </div>
                 ))}
