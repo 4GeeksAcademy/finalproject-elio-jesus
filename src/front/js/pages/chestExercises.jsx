@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/exercises.css";
+import "../../styles/home.css"
 
 export const ChestExercises = () => {
     const { actions } = useContext(Context);
@@ -28,13 +29,16 @@ export const ChestExercises = () => {
     }, [actions]);
 
     return (
-        <div className="container width-exercise">
+        <div className="container prueba width-exercise2 ">
             
+            <h2 className="text-center mt-3">Pectorales</h2>
             {error ? (
                 <p className="text-danger">{error}</p>
             ) : (
+                
                 chestExercises.map(exercise => (
-                    <div className="row borde border border-success p-2 mt-3" key={exercise.id}>
+                    
+                    <div className="row  borde border border-success p-2 mt-3" key={exercise.id}>
                         <div className="col-6 justify-content-center" >
                             <h2 className="fw-bold mt-4 pb-3">{exercise.name}</h2>
                             <p className="mt-1">{exercise.description}</p>
@@ -51,6 +55,7 @@ export const ChestExercises = () => {
                     </div>
                 ))
             )}
+
         </div>
     );
 };

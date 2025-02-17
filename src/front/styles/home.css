@@ -97,7 +97,13 @@ h1,h3{
 }
 
 .width-exercise{
+   
     max-width: 70%;
+}
+
+.width-exercise2{
+   
+    max-width: 50%;
 }
 
 .footer { 

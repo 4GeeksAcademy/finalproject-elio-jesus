@@ -91,12 +91,13 @@ export const LegsExercises = () => {
     }, [actions]);
 
     return (
-        <div className="container width-exercise">
+        <div className="container prueba width-exercise">
             
             {error ? (
                 <p className="text-danger">{error}</p>
             ) : (
                 <>
+                <div className="container width-exercise">
                     <h2 className="text-center mt-3">Quadriceps</h2>
                     {quadricepsExercises.map(exercise => (
                         <div className="row borde border border-success mt-3" key={exercise.id}>
@@ -115,10 +116,11 @@ export const LegsExercises = () => {
                             </div>
                         </div>
                     ))}
-
+                </div>
+                <div className="container width-exercise">
                     <h2 className="text-center mt-3">Femoral</h2>
                     {femoralExercises.map(exercise => (
-                        <div className="row border mt-3" key={exercise.id}>
+                        <div className="row borde border border-success mt-3" key={exercise.id}>
                             <div className="col-6">
                                 <h2 className="fw-bold mt-4 pb-3">{exercise.name}</h2>
                                 <p className="mt-5">{exercise.description}</p>
@@ -126,7 +128,7 @@ export const LegsExercises = () => {
                             <div className="col-6 mt-2 mb-2 d-flex justify-content-end">
                                 <iframe
                                     src={exercise.url}
-                                    className="videos"
+                                    className="videos borde border"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                     title={exercise.name}
@@ -134,10 +136,11 @@ export const LegsExercises = () => {
                             </div>
                         </div>
                     ))}
-
+                </div>
+                <div className="container width-exercise">
                     <h2 className="text-center mt-3">Pantorrillas</h2>
                     {calfExercises.map(exercise => (
-                        <div className="row border mt-3" key={exercise.id}>
+                        <div className="row borde border border-success mt-3" key={exercise.id}>
                             <div className="col-6">
                                 <h2 className="fw-bold mt-4 pb-3">{exercise.name}</h2>
                                 <p className="mt-5">{exercise.description}</p>
@@ -145,7 +148,7 @@ export const LegsExercises = () => {
                             <div className="col-6 mt-2 mb-2 d-flex justify-content-end">
                                 <iframe
                                     src={exercise.url}
-                                    className="videos"
+                                    className="videos borde border"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                     title={exercise.name}
@@ -153,10 +156,11 @@ export const LegsExercises = () => {
                             </div>
                         </div>
                     ))}
-
+                </div>
+                <div className="container width-exercise">
                     <h2 className="text-center mt-3">Glúteos</h2>
                     {gluteusExercises.map(exercise => (
-                        <div className="row border mt-3" key={exercise.id}>
+                        <div className="row borde border border-success mt-3" key={exercise.id}>
                             <div className="col-6">
                                 <h2 className="fw-bold mt-4 pb-3">{exercise.name}</h2>
                                 <p className="mt-5">{exercise.description}</p>
@@ -164,7 +168,7 @@ export const LegsExercises = () => {
                             <div className="col-6 mt-2 mb-2 d-flex justify-content-end">
                                 <iframe
                                     src={exercise.url}
-                                    className="videos"
+                                    className="videos borde border"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowFullScreen
                                     title={exercise.name}
@@ -172,6 +176,7 @@ export const LegsExercises = () => {
                             </div>
                         </div>
                     ))}
+                </div>    
                 </>
             )}
         </div>
