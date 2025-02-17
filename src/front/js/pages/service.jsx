@@ -6,22 +6,22 @@ import { Context } from "../store/appContext";
 const Service = () =>{
     const service = [
         {
-            id: 'Entrenadores',
+            id: 'trainer',
             nombre: 'Entrenadores',
             descripcion: 'Aquí encontrarás entrenadores certificados para ayudarte con tus entranamientos',
-            imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+            imagen: 'https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
         },
         {
-            id: 'Nutricionistas',
+            id: 'nutritionist',
             nombre: 'Nutricionistas',
             descripcion: 'Aquí encontrarás profesionales en el área de nutrición',
-            imagen: 'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+            imagen: 'https://images.pexels.com/photos/8376232/pexels-photo-8376232.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
         },
 		{
-			id: 'Fisio',
+			id: 'fisio',
 			nombre: 'Fisioterapeuta',
 			descripcion:'Aquí encontrarás profesionales en el área de fisio',
-			imagen:'https://www.luzycolor2000.com/wp-content/uploads/2022/12/iluminacion-gimnasio-1536x864.jpg'
+			imagen:'https://images.pexels.com/photos/20860624/pexels-photo-20860624/free-photo-of-hombres-gimnasio-cuidado-cuidado-de-la-salud.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
 		}
         
     ];

@@ -28,7 +28,7 @@ export const AbdomenExercises = () => {
     }, [actions]);
 
     return (
-        <div className="container width-exercise">
+        <div className="container width-exercise2 prueba">
             <h1 className="text-center mt-3">Abdomen</h1>
             {error ? (
                 <p className="text-danger">{error}</p>

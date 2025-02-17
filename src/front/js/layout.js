@@ -17,7 +17,7 @@ import { LegsExercises } from "./pages/legsExercises.jsx";
 import { ShouldersExercises } from "./pages/shouldersExercises.jsx";
 import Service from "./pages/service.jsx";
 import ServiceDetail from "./pages/serviceDetail.jsx";
-import { Admin } from "./pages/admin.jsx";
+import { Administrator } from "./pages/administrator.jsx";
 import ResetPassword from "./pages/resetPassword.jsx";
 import UpdatePassword from "./pages/updatePassword.jsx";
 import Payment from "./pages/payment.jsx";
@@ -27,7 +27,7 @@ import { Nutritionist } from "./pages/nutritionist.jsx"
 
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { Navbar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer.jsx";
 import formWallet from "./component/formWallet.jsx";
 
@@ -60,7 +60,7 @@ const Layout = () => {
                         <Route element={<Payment />} path="/payment" />
                         <Route element={<Profile />} path="/profile" />
                         <Route element={<EditProfile />} path="/edit_profile" />
-                        <Route element={<Admin />} path="/admin" />
+                        <Route element={<Administrator />} path="/administrator" />
                         <Route element={<ResetPassword />} path="/reset_password" />
                         <Route element={<UpdatePassword />} path="/update_password" />
                         <Route element={<Trainer />} path="/trainer" />

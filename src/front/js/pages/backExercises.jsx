@@ -28,8 +28,8 @@ export const BackExercises = () => {
     }, [actions]);
 
     return (
-        <div className="container">
-           
+        <div className="container width-exercise2 prueba">
+           <h2 className="text-center mt-3">Espalda</h2>
             {error ? (
                 <p className="text-danger">{error}</p>
             ) : (
