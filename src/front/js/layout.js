@@ -27,7 +27,7 @@ import { Nutritionist } from "./pages/nutritionist.jsx"
 
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { Navbar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer.jsx";
 import formWallet from "./component/formWallet.jsx";
 

@@ -28,8 +28,8 @@ export const ShouldersExercises = () => {
     }, [actions]);
 
     return (
-        <div className="container prueba">
-            
+        <div className="container prueba  width-exercise2">
+            <h2 className="text-center mt-3">Hombros</h2>
             {error ? (
                 <p className="text-danger">{error}</p>
             ) : (
@@ -51,7 +51,8 @@ export const ShouldersExercises = () => {
                     </div>
                 ))
             )}
-        </div>
+            </div>
+       
     );
 };
 

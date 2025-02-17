@@ -41,7 +41,7 @@ export const Home = () => {
                                 En nuestra página encontrarás una serie de ejercicios y rutinas según sea tu necesidad.
                             </p>
                             <div className="d-flex justify-content-center">
-                                <Link to="/exercises" className="btn btn-dark">Ver más</Link>
+                                <Link to="/" className="btn btn-dark">Ver más</Link>
                             </div>
                         </div>
                     </div>
@@ -79,7 +79,7 @@ export const Home = () => {
                                 En nuestra página encontrarás una serie de ejercicios y rutinas según sea tu necesidad.
                             </p>
                             <div className="d-flex justify-content-center">
-                                <Link to="/" className="btn btn-dark">Ver más</Link>
+                                <Link to="/exercises" className="btn btn-dark">Ver más</Link>
                             </div>
                         </div>
                     </div>

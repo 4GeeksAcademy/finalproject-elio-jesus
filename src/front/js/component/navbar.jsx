@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/navbar.css"
-import "../../img/logo.png"
+import "../../styles/navbar.css";
+
 
 export const Navbar = () => {
 	const { store, actions } = useContext(Context)
@@ -10,7 +10,7 @@ export const Navbar = () => {
 		<nav className="navbar navbar-dark bg-dark">
 			<div className="container">
 				<Link className="name" to="/">
-					<img src="../../img/logo.png"/>
+					<img className="logo" src="https://res.cloudinary.com/dtjg3wh4o/image/upload/v1739806106/Mesa_de_trabajo_1_ekqixy.png"/>
 				</Link>
 				<div className="d-flex ">
 						<div className="navbar-nav d-flex flex-row">
