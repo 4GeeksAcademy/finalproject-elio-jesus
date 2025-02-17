@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import "../../styles/admin.css";
 
-export const Admin = () => {
+export const Administrator = () => {
     const { store, actions } = useContext(Context);
     const [newExercise, setNewExercise] = useState({
         name: '',
